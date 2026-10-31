@@ -17,6 +17,7 @@ import uuid
 import base64
 import hashlib
 import hmac
+import http.client
 import time
 
 parser=argparse.ArgumentParser()
@@ -42,6 +43,28 @@ def call(method,path,body=None,as_token='admin',expected=200):
     return payload.get('data')
 
 def ok(name): checks.append(name);print('PASS',name,flush=True)
+
+def check_oversized_content_length():
+    """Require rejection from headers, before attempting to upload 16+ MiB.
+
+    urllib may raise BrokenPipeError while sending a body that Tomcat has
+    already rejected. This check explicitly reads and validates the 413.
+    """
+    url=urllib.parse.urlsplit(args.base+'/students/import')
+    connection_type=http.client.HTTPSConnection if url.scheme=='https' else http.client.HTTPConnection
+    connection=connection_type(url.hostname,url.port,timeout=25)
+    try:
+        connection.putrequest('POST',url.path)
+        connection.putheader('Content-Type','application/json')
+        connection.putheader('Authorization','Bearer '+token)
+        connection.putheader('Content-Length',str(16*1024*1024+1))
+        connection.endheaders()
+        response=connection.getresponse()
+        payload=json.loads(response.read())
+        assert response.status==413, f'oversized Content-Length: expected 413, got {response.status}'
+        assert payload['code']==0,payload
+    finally:
+        connection.close()
 def student(no,name='验收学生'):
     return {'studentNo':prefix+no,'name':name,'gender':'未说明','className':classroom['name'],'phone':'','email':'','status':'在读','enrollmentDate':'2026-09-01'}
 def newcourse(suffix,capacity=20):
@@ -105,7 +128,7 @@ try:
     call('POST','/students/import',{'csv':headers+'"unclosed'},expected=400)
     call('POST','/students/import',{'csv':headers+'a,b'},expected=400)
     call('POST','/students/import',{'csv':'X'*(2*1024*1024+1)},expected=400)
-    call('POST','/students/import',{'csv':'X'*(16*1024*1024)},expected=413)
+    check_oversized_content_length()
     call('POST','/students/import',{'csv':headers+''.join(f'{prefix}L{i:03},测试,男,{classroom["name"]},,,在读,2026-09-01\n' for i in range(501))},expected=400)
     assert call('GET','/students?search='+prefix+'L')['total']==0
     ok('CSV BOM and quoted comma accepted; malformed row and duplicate leave no partial insert')
