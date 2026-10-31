@@ -1,0 +1,2531 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="学序统一项目文档：阅读导航、启动运行、需求、接口、数据库、验收清单、报告与学习规划。">
+<title>学序 · 项目文档</title><style>
+:root{--ink:#182d42;--muted:#65778b;--navy:#132d44;--teal:#087f83;--line:#dce5ec;--paper:#fff;--soft:#f3f7fa;--blue:#235ca8;--code:#142b3b;color-scheme:light;font-family:Inter,"Segoe UI","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:112px}body{margin:0;color:var(--ink);background:var(--soft);font-size:15px;line-height:1.8}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #52a9c9;outline-offset:3px}[hidden]{display:none!important}
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;box-shadow:0 2px 14px #132d4414}.top-inner{max-width:1500px;margin:auto;padding:14px 30px;display:flex;align-items:center;gap:16px}.mark{display:grid;place-items:center;width:34px;height:34px;border:1px solid #85d7d4;border-radius:9px;font-weight:700;color:#bcf3eb}.brand{font-size:17px;font-weight:700;letter-spacing:.02em}.sub{font-size:12px;color:#bfd1e0;margin-left:10px}.top-actions{margin-left:auto;display:flex;gap:10px;align-items:center}.top-actions a,.top-actions button{color:#e4f3fa;background:transparent;border:1px solid #5c758a;border-radius:7px;padding:5px 12px;font-size:13px}.tabs{display:flex;gap:6px;padding:0 30px;max-width:1500px;margin:auto}.tabs a{display:block;padding:9px 21px;color:#c9d8e4;font-size:14px;border-radius:7px 7px 0 0}.tabs a[aria-current=page]{background:var(--soft);color:var(--navy);font-weight:700}.tabs a:hover{text-decoration:none;background:#304c64}.tabs a[aria-current=page]:hover{background:var(--soft)}
+.layout{max-width:1500px;display:grid;grid-template-columns:260px minmax(0,1fr);margin:auto;align-items:start}.sidebar{position:sticky;top:103px;padding:26px 20px 28px 28px;max-height:calc(100vh - 105px);overflow:auto}.side-label{font-size:11px;letter-spacing:.12em;color:var(--muted);font-weight:700;margin:0 0 10px}.search{width:100%;border:1px solid #c9d7e2;border-radius:8px;padding:9px 10px;background:white;line-height:1.4;color:var(--ink);font-size:13px}.search-note{font-size:11px;color:var(--muted);margin:7px 0 20px}.toc a{display:block;color:#486176;padding:6px 10px;border-left:2px solid transparent;font-size:12px;line-height:1.5;margin:2px 0}.toc a.depth3{padding-left:22px;color:#708397;font-size:11px}.toc a:hover{background:#e7eff5;border-color:var(--teal);text-decoration:none;color:var(--teal)}.source-note{font-size:11px;color:#7e8d9c;margin:20px 10px;line-height:1.7}.content{padding:28px 34px 70px 18px;min-width:0}.hero{border:1px solid var(--line);border-radius:12px;background:linear-gradient(120deg,#e7f5f3,#f4f8fc);padding:20px 26px;margin-bottom:20px}.eyebrow{font-size:10px;letter-spacing:.16em;color:var(--teal);font-weight:800}.hero h2{font-size:22px;margin:4px 0 5px}.hero p{font-size:12px;color:#536d7d;margin:0}.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{font-size:10px;color:#36675f;background:#ffffffa8;border:1px solid #c6e1dc;padding:3px 9px;border-radius:30px}
+.document{background:var(--paper);padding:30px 34px 45px;border:1px solid var(--line);border-radius:12px;min-width:0;overflow-wrap:anywhere}.document h1{font-size:27px;line-height:1.4;letter-spacing:-.02em;margin:0 0 16px;color:var(--navy)}.document h2{margin:38px 0 16px;font-size:21px;padding-bottom:9px;border-bottom:2px solid #d8e8ec;color:var(--navy);line-height:1.5}.document h3{margin:29px 0 12px;font-size:17px;color:#176d77;line-height:1.55}.document h4{margin:22px 0 10px;font-size:15px;color:#24485c}.document p{margin:12px 0}.document ul,.document ol{padding-left:24px;margin:12px 0}.document li{margin:5px 0}.task{list-style:none;margin-left:-18px!important}.todo{font-size:18px;color:#618696;margin-right:7px}.document blockquote{border-left:4px solid #35a2a2;background:#f0f8f8;margin:20px 0;padding:10px 17px;color:#3d6570;font-size:13px;border-radius:0 6px 6px 0}.document blockquote p{margin:3px 0}.document :not(pre)>code{background:#edf3f7;color:#294c6a;border:1px solid #e1eaf0;border-radius:4px;font-size:.86em;padding:1px 5px;font-family:Consolas,"Cascadia Code",monospace;overflow-wrap:anywhere}.document pre{position:relative;margin:17px 0;background:var(--code);color:#dcecf4;padding:22px 18px 18px;border-radius:9px;overflow:auto;line-height:1.65;font-size:12px}.document pre code{font-family:Consolas,"Cascadia Code",monospace;white-space:pre}.copy{position:absolute;right:9px;top:7px;font-size:10px;padding:1px 7px;border:1px solid #608293;background:#24475a;color:#e4f3fa;border-radius:4px}.table-wrap{overflow:auto;margin:18px 0;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;font-size:12px;line-height:1.7;min-width:480px}th{background:#edf4f8;text-align:left;color:#20465e;font-weight:700}td,th{padding:10px 12px;border-bottom:1px solid #e4ecf2;vertical-align:top}td+td,th+th{border-left:1px solid #edf1f5}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#fbfcfd}.document table code{font-size:11px!important}.document hr{border:0;border-top:1px solid var(--line);margin:30px 0}.search-results{margin-bottom:20px;border:1px solid #bad8df;border-radius:10px;padding:18px 20px;background:#f5fbfb}.search-results h3{margin:0 0 10px;font-size:14px;color:#12676f}.result{display:block;border-top:1px solid #d9e9ec;padding:9px 0;font-size:13px}.result small{display:block;color:#738a96;font-size:11px}.footer{font-size:11px;color:#7e8e9e;padding:18px 3px}.menu{display:none}
+@media(min-width:1650px){.document{padding:40px 48px}.content{padding-right:45px}}
+@media(max-width:950px){.layout{grid-template-columns:210px minmax(0,1fr)}.sidebar{padding-left:15px;padding-right:14px}.content{padding:20px 16px 40px 0}.document{padding:24px}.sub{display:none}.hero{padding:17px 21px}.top-inner{padding:12px 18px}.tabs{padding:0 18px}}
+@media(max-width:720px){.layout{display:block}.sidebar{display:none;position:fixed;top:101px;bottom:0;left:0;z-index:15;width:275px;max-height:none;background:#f3f7fa;box-shadow:10px 0 30px #132d4420}.sidebar.open{display:block}.menu{display:inline-block}.content{padding:14px 12px 35px}.document{padding:23px 18px}.document h1{font-size:23px}.document h2{font-size:19px}.brand{font-size:15px}.top-inner{gap:9px;padding:12px}.top-actions a{display:none}.top-actions button{font-size:11px;padding:4px 8px}.tabs{padding:0 12px}.tabs a{padding:8px 15px}.hero{padding:16px 18px}.hero h2{font-size:19px}}
+@media print{body{background:#fff;font-size:10pt}.top,.sidebar,.hero,.footer,.copy,.search-results{display:none!important}.layout{display:block;max-width:none}.content{padding:0}.document{border:0;padding:0;border-radius:0}.document h1{font-size:23pt}.document h2{font-size:16pt;break-after:avoid}.document h3,.document h4{break-after:avoid}.table-wrap{overflow:visible;border-radius:0}table{min-width:0;font-size:8pt}th,td{padding:6px 8px}.document pre{white-space:pre-wrap;overflow:visible;background:#f0f3f5;color:#182d42;break-inside:avoid}.document pre code{white-space:pre-wrap;word-break:break-word}.document a{color:inherit}.document blockquote{break-inside:avoid}thead{display:table-header-group}tr{break-inside:avoid}@page{size:A4;margin:16mm}}
+</style></head><body>
+<header class="top"><div class="top-inner"><span class="mark">序</span><span class="brand">学序 EduFlow</span><span class="sub">PROJECT DOCUMENTATION</span>
+<div class="top-actions"><a id="download" href="README.md" download>下载 Markdown</a><button id="print" type="button">打印 / 保存 PDF</button><button id="menu" class="menu" aria-controls="sidebar" aria-expanded="false" type="button">目录</button></div></div>
+<nav class="tabs" aria-label="文档类型" style="overflow-x:auto;white-space:nowrap"><a href="#guide" data-tab="guide">阅读导航</a><a href="#startup" data-tab="startup">启动运行</a><a href="#intro" data-tab="intro">项目介绍</a><a href="#requirements" data-tab="requirements">需求文档</a><a href="#api" data-tab="api">接口文档</a><a href="#database" data-tab="database">数据库说明</a><a href="#verification" data-tab="verification">验收记录</a><a href="#demo" data-tab="demo">演示数据</a><a href="#plan" data-tab="plan">学习规划</a></nav></header>
+<div class="layout"><aside class="sidebar" id="sidebar"><p class="side-label">SEARCH &amp; CONTENTS</p><label for="search" class="side-label">搜索全部文档</label><input class="search" id="search" type="search" placeholder="搜索需求、接口或集数…" autocomplete="off"><p class="search-note">Ctrl / Cmd + K · 输入关键词搜索章节</p><section id="search-results" class="search-results" aria-live="polite" hidden></section><nav id="toc" class="toc" aria-label="当前文档目录"></nav><p class="source-note">基线：2026-10-23<br>以 Markdown 为维护源<br>生成版本：39001235a941</p></aside>
+<main class="content"><section class="hero"><div class="eyebrow">LEARN · BUILD · VERIFY</div><h2 id="doc-name">阅读导航</h2><p>从这里阅读说明、规范启动、核对数据并逐项验收，无需在项目目录中来回寻找。</p><div class="pill-row"><span class="pill">启动与验收</span><span class="pill">管理员 / 教师 / 学生</span><span class="pill">数据库与验证附件</span><span class="pill">P84–200 学习索引</span></div></section>
+<article class="document" id="document-guide" data-doc="guide"><h1 id="guide-项目文档阅读导航">项目文档阅读导航</h1>
+<p>先阅读<a href="#intro">项目介绍</a>，再按需要查看<a href="#startup">启动说明</a>、<a href="#requirements">需求文档</a>、<a href="#api">接口文档</a>、<a href="#database">数据库说明</a>、<a href="#verification">验证记录</a>、<a href="#demo">演示数据</a>及<a href="#plan">学习规划</a>。</p>
+<p>离线阅读入口为 <code>docs/index.html</code>，应用内入口为 <code>/project-docs.html</code>。源稿为根 README、docs/*.md 和 sql/README.md；执行 <code>python tools/build_docs.py</code> 更新，<code>--check</code> 检查同步与内部链接。发布副本不包含本机配置、原始用户数据及本机业务库截图。</p></article>
+<article class="document" id="document-startup" data-doc="startup" hidden><h1 id="startup-学序-eduflow">学序 EduFlow</h1>
+<p>面向管理员、教师和学生的教务管理系统。以学生 CRUD 学习原型为起点，借助 AI 辅助开发和调试，扩展为包含身份权限、选课、考试、成绩、考勤、报表及操作审计的个人项目。</p>
+<p><strong>Java 21 · Spring Boot 4.0.8 · Spring Security · MyBatis · MySQL 8 · Flyway · React 19 · TypeScript</strong></p>
+<p><a href="#intro">项目介绍</a> · <a href="#requirements">需求文档</a> · <a href="#api">接口文档</a> · <a href="#verification">验证记录</a></p>
+<h2 id="startup-功能与实现">功能与实现</h2>
+<ul>
+<li>3 类角色：管理员维护业务与授权；教师只操作获授权课程；学生仅访问本人学业信息。</li>
+<li>11 张业务表：班级、学生、课程、独立选课、多次考试、成绩、点名、账户与审计。</li>
+<li>JWT + BCrypt + token_version：登录、改密、禁用和退出后的令牌撤销。</li>
+<li>选课通过课程行锁及 READ COMMITTED 控制名额；成绩和点名以版本条件更新检测冲突。</li>
+<li>CSV 导入和批量保存通过 Service 事务保持全成全败；学生目录使用 SQL 条件分页。</li>
+<li>Flyway V1/V2 管理数据库结构；前后端分离，同源代理联调。</li>
+</ul>
+<h2 id="startup-本地运行">本地运行</h2>
+<p>准备 JDK 21、Maven 3.9、Node 22.6+、pnpm 10.11.0，以及 MySQL 8.0.16+（已验证版本 8.0.34）。</p>
+<pre><code class="language-sh">git clone https://github.com/wangzikang185-max/eduflow.git
+cd eduflow
+corepack enable
+pnpm --dir frontend install --frozen-lockfile
+</code></pre>
+<p>创建空库（无需手动运行迁移 SQL）：</p>
+<pre><code class="language-sql">CREATE DATABASE xuexu CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+</code></pre>
+<p>Windows 下运行 <code>start.cmd</code>，首次会生成并提示 <code>runtime/local.env</code> 后退出。填写 DB_URL、DB_USERNAME、DB_PASSWORD，保留随机生成的 JWT_SECRET 和 ADMIN_PASSWORD，然后再次运行 <code>start.cmd</code>。默认入口 http://127.0.0.1:5173/，管理员用户名为 <code>admin</code>，密码取自本机配置。项目不包含真实用户数据、数据库备份或共享默认管理员密码。</p>
+<p>Linux/macOS 可以按 <code>.env.example</code> 设置环境变量，再在两个终端分别执行：</p>
+<pre><code class="language-sh">mvn -B -ntp -f backend/pom.xml spring-boot:run
+pnpm --dir frontend dev
+</code></pre>
+<p>已有数据升级前先备份；Flyway 会从旧学生表 baseline 后执行迁移。MySQL DDL 不保证整段事务回滚。</p>
+<h2 id="startup-测试与证据">测试与证据</h2>
+<p>2026-10-31 本地重新执行：<strong>22 项后端测试、10 项前端领域测试全部通过，JAR 打包及 TypeScript/Vite 构建成功</strong>。</p>
+<p>另保留 2026-10-23 的 <strong>13 组真实 HTTP/MySQL 验收</strong>原始报告，覆盖教师课程越权、学生仅本人、批量回滚、最后名额竞争、版本冲突及令牌撤销。本次发布没有把历史报告改成新日期，也没有进行 100 并发容量压测。</p>
+<pre><code class="language-sh">mvn -B -ntp -f backend/pom.xml package
+pnpm --dir frontend test
+pnpm --dir frontend build
+</code></pre>
+<p>真实业务验收使用独立空库和测试服务；设置 V2_TEST_PASSWORD、V2_TEST_JWT_SECRET 后运行：</p>
+<pre><code class="language-sh">python tools/verify_v2.py --base http://127.0.0.1:8086
+</code></pre>
+<p>具体设置见<a href="#verification">验证记录</a>。GitHub Actions 自动构建并执行独立 MySQL 验收，云端结果以仓库 Actions 为准。</p>
+<h2 id="startup-文档与演示数据">文档与演示数据</h2>
+<p><code>docs/index.html</code> 为离线文档中心，应用内 <code>/project-docs.html</code> 可阅读同一份文档。修改 Markdown 后运行 <code>python tools/build_docs.py</code>，再运行 <code>python tools/build_docs.py --check</code>（需要 Python-Markdown）。虚构演示数据可以用 <code>tools/seed_demo.py</code> 通过真实 API 创建，见<a href="#demo">演示数据说明</a>。</p>
+<p>提供 Dockerfile 和 Compose，尚未在本机执行容器验证；无公网演示地址。课程内列表与报表主要面向小规模工作区，未宣称高吞吐或生产级部署。</p></article>
+<article class="document" id="document-intro" data-doc="intro" hidden><h1 id="intro-学序-eduflow-教务管理系统-v2">学序 EduFlow · 教务管理系统 V2</h1>
+<p>版本 2.0.0 · 更新：2026-10-24。<a href="#requirements">需求</a> · <a href="#api">接口</a> · <a href="#plan">学习规划</a>。</p>
+<h2 id="intro-1-项目介绍">1. 项目介绍</h2>
+<p>学序是面向管理员、教师和学生的教务管理系统，使用 React/TypeScript 构建前端，以 Java 21、Spring Boot、MyBatis 和 MySQL 实现后端。系统贯通“班级维护 → 学生建档 → 开课与教师授权 → 独立选课 → 多次考试与成绩 → 课堂考勤 → 综合学业报表”，并提供学生自助门户、CSV 导入导出和服务端操作审计。</p>
+<p>项目从学生单表 CRUD 扩展为有真实认证、数据范围控制、跨表事务和并发冲突处理的 V2。所有正式页面调用 Java HTTP 接口，业务数据写入 MySQL。旧 mock 前端保留作学习对照，正式入口不使用它。</p>
+<h2 id="intro-2-技术栈解决了哪些问题">2. 技术栈解决了哪些问题</h2>
+<p>代码定位以项目根目录 <code>xuexu/</code> 为起点；<code>文件路径:行号</code> 对应 2026-10-24 当前源码，箭头后为应搜索的方法、变量或 SQL 常量。后续修改导致行号移动时，以符号名称定位。每项同时指出入口、关键逻辑或验证位置，避免只列目录名。</p>
+<p>阅读时先看“具体问题”的业务场景，再按“实现方式”的编号追踪处理过程，最后沿证据定位代码。表中的人数、分数和版本数字用于解释机制，不是当前数据库统计或性能测试结果。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>技术</th>
+<th>具体问题</th>
+<th>实现方式</th>
+<th>可核查证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>React 19 + TypeScript</td>
+<td>学生、课程、成绩等页面都需要加载数据、提交表单和显示错误。若每页各写一套，容易把 studentNo 写成别的字段名，或者遗漏登录令牌与超时处理。教师录入一半成绩后切换课程，还可能丢失尚未保存的修改；不同角色也需要看到各自的功能菜单。</td>
+<td>① TypeScript 定义学生、课程及 <code>Page&lt;T&gt;</code> 等类型，在开发和编译阶段检查字段与组件参数；实际输入仍由后端校验。<br>② <code>request&lt;T&gt;</code> 统一附带 Bearer 令牌、解析响应、处理 20 秒超时与 401 失效，页面直接使用返回的 data。<br>③ useResource、Editor、Table 复用加载、错误、表单和表格行为，角色菜单集中管理。<br>④ 草稿与已保存数据分开，通过 dirty 判断是否修改；切换前确认，保存失败时保留草稿。</td>
+<td><code>frontend/src/v2/client.ts:124</code> → <code>request&lt;T&gt;</code> 统一请求；<code>client.ts:37</code> → <code>Page&lt;T&gt;</code> 分页类型。<br><code>frontend/src/v2/shared.tsx:12</code> → <code>useResource</code> 加载/错误状态；同文件第 96 行 <code>Editor</code>、第 266 行 <code>Table</code>。<br><code>frontend/src/v2/WorkspaceApp.tsx:206</code> → <code>available</code> 按角色筛选菜单。<br><code>frontend/src/v2/Assessment.tsx:61</code> → <code>dirty</code> 判断未保存成绩草稿。</td>
+</tr>
+<tr>
+<td>Vite + 同源 /api 代理</td>
+<td>开发页面在 5173，Java 接口在 8081，浏览器直接请求不同端口会涉及跨域。若每个页面都写死 http://127.0.0.1:8081，换端口或部署后就要到处修改，容易出现页面能打开、接口却连错地址的问题。</td>
+<td>① 页面统一请求 /api/students 等相对地址，浏览器先访问提供页面的同一站点。<br>② 开发时 Vite 把请求转发到 API_TARGET 指定的后端，并去掉 /api 前缀，例如 /api/students → Java 的 /students。<br>③ 本机 5180 产物服务器提供相同转发规则，仓库另提供 Nginx 配置供容器部署使用。<br>页面代码与具体后端地址分开，切换环境主要调整代理配置。</td>
+<td><code>frontend/vite.config.ts:9</code> → <code>server.proxy</code>，第 11 行 <code>target</code>、第 13 行 <code>rewrite</code>。<br><code>frontend/nginx.conf:9</code> → <code>/api/</code> 的 <code>proxy_pass</code>。<br><code>tools/serve-production.mjs:36</code> → <code>/api</code> 分支和上游转发。</td>
+</tr>
+<tr>
+<td>Spring Boot + 分层 Java</td>
+<td>新增一个学生，既要读取姓名和手机号，又要判断班级是否存在、学号是否重复，最后才能写数据库。如果都混在一个 HTTP 方法里，发生“添加失败”时很难定位是参数、业务规则还是 SQL 的问题，不同接口也容易重复编写相同规则。</td>
+<td>① Controller 是 HTTP 入口，接收路径、查询参数和请求体，再调用业务方法。<br>② Service 负责“允不允许这样做”：校验字段和权限、组织数据库操作，并划定事务范围。<br>③ Mapper/数据库访问层执行绑定参数的 SQL，页面不直接操作数据库。<br>④ 全局异常处理把输入错误、目标不存在、版本冲突等映射为对应 HTTP 状态和统一的 code/msg/data，前端按同一种格式显示结果。</td>
+<td><code>backend/src/main/java/com/xuexu/controller/StudentController.java:30</code> → <code>list</code> 接参。<br><code>backend/src/main/java/com/xuexu/service/impl/StudentServiceImpl.java:32</code> → <code>findPage</code> 校验和业务编排。<br><code>backend/src/main/java/com/xuexu/mapper/StudentMapper.java:26</code> → <code>page</code> 绑定 SQL 参数。<br><code>backend/src/main/java/com/xuexu/controller/GlobalErrors.java:40</code> → <code>duplicate</code>；第 59 行 <code>unexpected</code> 统一异常响应。</td>
+</tr>
+<tr>
+<td>Spring Security + JWT + BCrypt</td>
+<td>前端隐藏“删除学生”按钮，仍无法阻止用户自己构造删除请求。教师可能把课程 A 的 URL 改成课程 B，学生可能提交别人的 studentId。后端必须同时确认“你是谁”和“你能访问哪一条数据”，账户密码也不能明文保存。</td>
+<td>① 登录时用 BCrypt 核对密码哈希；数据库保存带盐哈希，验证时不需要还原明文密码。<br>② 服务器签发 JWT，前端请求时携带令牌；Spring Security 检查签名、发行者（issuer）、有效期和账户启用状态。<br>③ CurrentUser 从真实账户取得角色，在查询和课程操作中检查教师的授权范围。<br>④ 学生门户按账户绑定的 student_id 限定本人，权限范围不由前端提交的角色或学生 ID 决定。</td>
+<td><code>backend/src/main/java/com/xuexu/security/SecurityConfig.java:24</code> → <code>passwordEncoder</code>；第 41 行 <code>decoder</code>；第 66 行 <code>filterChain</code>。<br><code>backend/src/main/java/com/xuexu/service/AuthService.java:38</code> → <code>login</code> 检查密码并签发 JWT。<br><code>backend/src/main/java/com/xuexu/security/CurrentUser.java:45</code> → <code>course</code> 检查课程权限；第 53 行 <code>scope</code> 取得真实身份范围。</td>
+</tr>
+<tr>
+<td>token_version</td>
+<td>JWT 在有效期内通常仍能通过签名检查。如果退出时只清除浏览器中的令牌，另一处保存的旧令牌仍可能继续使用。用户改密或管理员停用账户后，也希望旧登录马上失效，而不必等待令牌自然过期。</td>
+<td>① 账户表保存 token_version，登录时把当前值写入 JWT 的 ver。<br>② 每次请求除了验签，还比较 JWT ver 与数据库最新版本，并检查 enabled。例如两边都是 3 时允许访问；退出或改密后数据库变成 4，旧令牌 3 随即被拒绝。<br>③ 退出、改密及账户更新通过 SQL 递增版本。<br>这是账户级撤销：该账户此前的全部旧令牌都会失效；为了及时生效，验证过程需要查询数据库状态。</td>
+<td><code>backend/src/main/java/com/xuexu/security/SecurityConfig.java:41</code> → <code>decoder</code> 内比较 <code>ver</code> 与 <code>tokenVersion</code>。<br><code>backend/src/main/java/com/xuexu/controller/AuthController.java:44</code> → <code>logout</code>。<br><code>backend/src/main/java/com/xuexu/service/AuthService.java:116</code> → <code>passwordChange</code>；第 124 行 <code>updateUser</code>。<br><code>backend/src/main/java/com/xuexu/mapper/WorkspaceSql.java:59</code> → <code>USER_UPDATE</code>；第 63 行 <code>PASSWORD</code>；第 66 行 <code>LOGOUT</code>，均递增版本。</td>
+</tr>
+<tr>
+<td>MyBatis + MySQL LIMIT/OFFSET</td>
+<td>假设有 1 万名学生，页面只显示第 3 页的 10 人：若先查询所有学生，再用 Java 筛选和切片，服务仍要加载大量暂时用不到的数据。总人数查询与当前页使用不同筛选或权限条件，还会让分页显示对不上。</td>
+<td>① SQL 的 WHERE 统一组合关键词、班级、学籍和教师授权范围。<br>② COUNT 查询符合条件的总数，LIMIT/OFFSET 只取当前页；每页 10 人、第 3 页时 offset=(3-1)×10=20，两次查询共用筛选条件。<br>③ 按 create_time、id 倒序，保证同一创建时间的记录也有明确顺序；用户输入通过 <code>#{参数}</code> 绑定到固定 SQL。<br>本项针对学生目录，减少 Java 加载的记录；其他部分名单和报表仍有前端分页，项目没有大规模性能实测。</td>
+<td><code>backend/src/main/java/com/xuexu/mapper/StudentMapper.java:13</code> → <code>FILTER</code> 共用筛选条件；第 26 行 <code>page</code>；第 35 行 <code>count</code>。<br><code>backend/src/main/java/com/xuexu/service/impl/StudentServiceImpl.java:32</code> → <code>findPage</code> 计算 offset、传入教师范围。<br><code>backend/src/test/java/com/xuexu/StudentServiceTest.java:63</code> → <code>paginationIsDelegatedToDatabaseAndNeverLoadsAll</code>；第 79 行验证教师范围与联系方式脱敏。</td>
+</tr>
+<tr>
+<td>InnoDB 行锁 + READ COMMITTED</td>
+<td>课程容量 30 人、当前有 29 人。甲乙同时选课，若都先读到 29，再各自判断“还能加入 1 人”，两次判断都通过，最终可能变成 31 人。“先查人数、再插入”的多步代码不会自动成为一个不可插队的操作。</td>
+<td>① 选课事务用 <code>SELECT ... FOR UPDATE</code> 锁住同一门课程的记录，让修改这门课名额的请求依次处理；不是锁住整个数据库。<br>② 拿到锁后查询人数、检查容量，再写入选课关系和各次考试的空成绩，最后提交并释放锁。<br>③ READ COMMITTED 让等待锁的请求随后统计人数时，能看到上一事务已提交的结果。<br>甲成功后人数为 30，乙再检查就被拒绝：锁负责排队，隔离级别负责读取可见性，两者配合。</td>
+<td><code>backend/src/main/java/com/xuexu/service/AcademicService.java:159</code> → <code>enroll</code> 的隔离级别注解及方法，先 <code>course(id)</code> 再查人数。<br><code>backend/src/main/java/com/xuexu/mapper/WorkspaceSql.java:33</code> → <code>COURSE</code> 的 <code>FOR UPDATE</code>；第 76 行 <code>ENROLLED</code> 人数统计。<br><code>backend/src/main/resources/application.yml:10</code> → 连接池隔离级别。<br><code>tools/verify_v2.py:123</code> 附近 → 最后一个名额并发验收断言。</td>
+</tr>
+<tr>
+<td>version 乐观锁</td>
+<td>两位教师同时打开同一条成绩，都读到 80 分、version=3。甲先保存为 85 分，乙随后还拿旧页面提交 75 分。若只按成绩 ID 更新，乙会覆盖甲的新结果，双方却没有收到冲突提示。</td>
+<td>① 前端保存时附带当初读取的 version。<br>② SQL 同时匹配记录 ID 与旧版本，例如 <code>WHERE id=? AND version=3</code>；成功后把版本增加到 4。<br>③ 乙继续提交 3 时，更新影响 0 行，Service 识别出陈旧数据，返回 HTTP 409。<br>④ 前端保留失败草稿，提示重新加载后处理差异，不自动覆盖。相当于保存时检查“你看到的那一版是否仍是最新”，无需在用户整个编辑期间一直占着数据库锁。</td>
+<td><code>backend/src/main/java/com/xuexu/mapper/StudentMapper.java:60</code> → 学生 <code>update</code> 的版本条件。<br><code>backend/src/main/java/com/xuexu/mapper/WorkspaceSql.java:112</code> → <code>GRADE_UPDATE</code>；第 121 行 <code>SHEET_UPDATE</code>。<br><code>backend/src/main/java/com/xuexu/service/AcademicService.java:266</code> → <code>saveGrades</code>；第 336 行 <code>saveAttendance</code>，检查更新结果并抛出冲突。<br><code>backend/src/test/java/com/xuexu/StudentServiceTest.java:91</code> → <code>staleStudentDoesNotReportSuccess</code>。</td>
+</tr>
+<tr>
+<td>Spring 事务 + 唯一索引/CHECK</td>
+<td>批量保存 20 条成绩，前 10 条成功、第 11 条发现版本冲突，若前面已经提交，一次点击就只成功了一半。两次新增请求还可能同时通过“学号不存在”的检查，随后插入相同学号；单靠 Java 的事前判断兜不住这种竞争。</td>
+<td>① 先检查整批数据的格式、身份、范围及重复项，再开始写入。<br>② @Transactional 将一批写入放在同一事务；任一项抛出异常，包括写到中途才发现版本过期，前面的修改也一起回滚。<br>③ 唯一索引/主键兜住学号、选课和每次考试成绩的重复，CHECK 兜住配置的合法数值范围；并发绕过事前检查时仍由数据库拒绝。<br>④ 关联删除由 Service 在事务中显式清理；本项目未设外键，不能依赖数据库自动级联删除。</td>
+<td><code>backend/src/main/java/com/xuexu/service/impl/StudentServiceImpl.java:102</code> → <code>deleteMany</code> 事务；第 126 行 <code>importCsv</code> 事务。<br><code>backend/src/main/java/com/xuexu/service/AcademicService.java:265</code> → <code>saveGrades</code> 事务；第 335 行 <code>saveAttendance</code> 事务。<br><code>backend/src/main/resources/db/migration/V1__workspace_baseline.sql:34</code> → 学号唯一索引；第 64 行起为课程 CHECK。<br><code>backend/src/main/resources/db/migration/V2__academic_workspace.sql:27</code> → 课程内考试名称唯一；第 34 行起调整考试成绩唯一关系。</td>
+</tr>
+<tr>
+<td>独立 enrollment/exam 模型</td>
+<td>“教师获准管理这门课”和“学生选了这门课”是两种关系，不能混用授权表。所有学生自动关联所有课程会让名单失真；成绩只按学生和课程保存一条，则无法分别表达平时考核、期中和期末考试。</td>
+<td>① enrollment 保存学生—课程选课关系，user_course 单独保存教师—课程操作授权。<br>② exam 保存同一课程下不同考试的日期和权重，grade 按 exam_id + student_id 保持唯一，同一学生同一课程可以有多次考试成绩。<br>③ 新选课时初始化这门课各次考试的 null 成绩，表示尚未录入；新增考试也为已有选课学生初始化空成绩。<br>④ 人数从 enrollment 统计，课程页面不能提交一个人数覆盖真实选课关系。</td>
+<td><code>backend/src/main/resources/db/migration/V2__academic_workspace.sql:14</code> → <code>eduflow_enrollment</code>；第 24 行 <code>eduflow_exam</code>；第 34 行成绩关系迁移。<br><code>backend/src/main/java/com/xuexu/service/AcademicService.java:160</code> → <code>enroll</code>；第 203 行 <code>saveExam</code>。<br><code>backend/src/main/java/com/xuexu/mapper/WorkspaceSql.java:83</code> → <code>ENROLL_GRADES</code> 为新增选课初始化每次考试的空成绩。</td>
+</tr>
+<tr>
+<td>SQL 多表聚合 + BigDecimal/DECIMAL</td>
+<td>0 分是已经录入的真实成绩，空分是尚未录入，混用会算错完成度和均分。多次考试也不能总取简单平均：平时 80 分、权重 40，期末 100 分、权重 60，加权结果应为 92。点名页面预填但未保存的状态，也不能当作真实出勤记录。</td>
+<td>① DECIMAL(5,2) 保存成绩，Java 用 BigDecimal 校验 0–100 范围及最多两位小数，减少十进制精度与非法输入问题。<br>② SQL 联查选课、学生、课程、考试和成绩，按 Σ(已录入分数×权重) / Σ(已录入考试权重) 计算，四舍五入到两位。未录入不进分母，0 分参与计算，全未录入返回 null；上例只有平时成绩时结果为 80，不会当作 32。<br>③ 出勤率只统计已保存明细；按本项目口径，present/late 计入出勤数，全部已保存点名明细作分母，并按授权范围与日期筛选。</td>
+<td><code>backend/src/main/java/com/xuexu/mapper/WorkspaceSql.java:156</code> → <code>REPORT</code> 的 <code>SUM/COUNT/NULLIF/ROUND</code> 加权聚合。<br><code>backend/src/main/java/com/xuexu/service/ReportService.java:28</code> → <code>report</code> 处理出勤率与授权范围；第 55 行 <code>overview</code>。<br><code>backend/src/main/java/com/xuexu/service/Rules.java:37</code> → <code>decimal</code> 使用 BigDecimal 校验范围、小数位和步长。<br><code>backend/src/main/java/com/xuexu/service/AcademicService.java:266</code> → <code>saveGrades</code> 区分 null 与实际分数。</td>
+</tr>
+<tr>
+<td>Apache Commons CSV + 全批事务</td>
+<td>CSV 的带引号字段可以包含逗号和换行，例如“王,小明”仍可能只占一个姓名字段；直接按每个逗号或换行拆分会拆错记录。文件还可能带 BOM、重复学号或错误日期；导出内容以 = 等符号开头时，表格软件可能把它当公式。</td>
+<td>① Apache Commons CSV 按格式识别引号、逗号、字段内换行和双引号转义，去掉开头 UTF-8 BOM，并核对固定的 8 列表头。<br>② 限制内容不超过 2 MiB、单次最多 500 条；按 CSV 记录号定位错误，字段内换行不另算一条记录。<br>③ 检查所有记录的字段、文件内重复和已有学号，全部通过后才批量写入；同一事务兜住写入阶段的异常。<br>④ 导出给字段加引号、转义内部双引号，对可能被识别为公式的开头加单引号前缀。</td>
+<td><code>backend/src/main/java/com/xuexu/service/impl/StudentServiceImpl.java:127</code> → <code>importCsv</code> 中 CSVFormat/CSVParser、表头与全量校验。<br><code>frontend/src/lib/domain.ts:39</code> → <code>csvCell</code> 转义与公式保护；第 44 行 <code>studentCSV</code> 固定导出模板。<br><code>backend/src/test/java/com/xuexu/StudentServiceTest.java:127</code> → <code>csvValidationCompletesBeforeFirstWrite</code>；第 138 行验证大小写重复。</td>
+</tr>
+<tr>
+<td>Flyway</td>
+<td>项目原先已有学生和主键，升级时要增加班级、选课、考试及版本字段，不能为了换结构就丢掉旧数据。手工执行 ALTER 时，又容易记不清哪些库已经改过，造成重复执行或不同环境之间的结构不一致。</td>
+<td>① 把结构演进保存为带版本号的 V1、V2 SQL，用 flyway_schema_history 记录执行历史与校验信息。<br>② 对本项目已适配的旧非空库建立 baseline 0，再依次执行兼容迁移；V1 保留已有学生表，V2 增加新模型，把已有成绩/考勤关系迁到选课和默认考试中。<br>③ 启动时验证历史，只执行尚未执行的版本；之后改表应新增迁移文件，不随意修改已执行的版本。<br>目标是升级可追踪、原学生 ID 和资料保留；升级前仍要备份，不能假设 MySQL 改表能整段回滚。</td>
+<td><code>backend/src/main/resources/application.yml:11</code> → <code>spring.flyway</code> 的 baseline 配置。<br><code>backend/src/main/resources/db/migration/V1__workspace_baseline.sql:1</code> → 兼容已有学生表的基线结构。<br><code>backend/src/main/resources/db/migration/V2__academic_workspace.sql:14</code> → 显式选课迁移；第 24 行考试表及其后成绩迁移。<br>数据库执行历史核对 <code>flyway_schema_history</code>；历史升级/恢复结果见本文档中心“验收记录”的迁移恢复附件。</td>
+</tr>
+<tr>
+<td>REQUIRES_NEW 审计 + Logback</td>
+<td>这里包含两类问题：一是失败审计若和业务共用事务，业务回滚时“这次改分失败了”的记录也可能消失；二是同步向控制台写日志时，终端暂停或不再消费输出，可能让请求线程一直等待，表现为页面请求超时。</td>
+<td>① 请求完成后拦截器汇总操作者、动作、目标及 HTTP 结果，通过 REQUIRES_NEW 独立事务保存审计，使业务回滚失败的记录仍能留下。单目标变更只保存存在性/版本摘要，不是逐分值历史。<br>② Logback 全局使用 INFO，日志文件按天及 10MB 大小滚动，保留 30 天。<br>③ 控制台走容量 256 的异步队列，neverBlock=true；队列满时允许丢控制台副本，让业务线程继续，文件通道保留对应日志。数据库审计用于业务留痕，运行日志用于诊断故障。</td>
+<td><code>backend/src/main/java/com/xuexu/security/AuditConfig.java:72</code> → <code>afterCompletion</code> 调用审计；第 28 行 <code>snapshot</code>。<br><code>backend/src/main/java/com/xuexu/service/AuditService.java:18</code> → <code>REQUIRES_NEW</code> 与 <code>record</code>。<br><code>backend/src/main/resources/logback.xml:13</code> → <code>ASYNC_STDOUT</code>；第 22 行滚动文件；第 39 行 root。<br><code>backend/src/test/java/com/xuexu/ConsoleLoggingTest.java:26</code> → 模拟控制台堵塞，验证 1000 条记录不拖住业务且全部写文件。</td>
+</tr>
+<tr>
+<td>JUnit/Mockito/MockMvc + 真实 HTTP/MySQL + 浏览器</td>
+<td>编译通过只说明代码能够构建，不能单独证明权限、数据库回滚和页面都正确。模拟 Service 返回成功，测不到真实 MySQL 的约束和名额竞争；即使后端接口正确，前端也可能仍有保存、筛选、草稿或刷新回显的问题。</td>
+<td>① JUnit/Mockito 检查业务分支和调用行为，例如校验失败前没有写库、分页交给 Mapper、旧版本不返回成功。<br>② MockMvc 模拟 HTTP 请求，核对参数、状态码和响应结构；学生接口测试使用模拟 Service，不冒充真实数据库集成测试。<br>③ 独立测试库启动真实 Java 服务，用 HTTP 脚本验证并发选课、批量回滚、401/403 及令牌撤销等 13 组场景。<br>④ 浏览器核对新增、录分、点名、角色范围和保存回显；各层结果分别记录，历史通过不等于本次重测，也不等于吞吐压测。</td>
+<td><code>backend/src/test/java/com/xuexu/StudentHttpTest.java:32</code> → <code>setup</code> 用模拟 Service 组装 MockMvc；第 38 行列表响应测试。<br><code>backend/src/test/java/com/xuexu/StudentServiceTest.java:63</code> → 数据库分页委托；第 91 行陈旧版本；第 127 行 CSV 写入前校验。<br><code>tools/verify_v2.py:30</code> → 真实 HTTP 调用；第 50 行并发工具；第 123/161 行附近为容量竞争和批量回滚验收。<br><code>docs/验收记录.md</code> 第 2 节保存浏览器实测；第 4 节给出重新验收步骤，历史结果不等同本轮全量重测。</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="intro-21-技术栈快速学习路线中文视频">2.1 技术栈快速学习路线（中文视频）</h3>
+<p>本路线用于理解上表技术为什么存在、如何解决学序中的问题。先学数据库分页 → 事务与约束 → 行锁与隔离级别 → 乐观锁 → 登录权限 → 测试，再补前端和辅助工具。课程只看指定章节；表中“建议投入”是第一轮学习时间，不是整套视频长度。</p>
+<p>视频依据页面、简介和选集目录筛选，未逐条完整观看。链接与章节整理于 2026-10-24，选集变化时以章节标题为准。看完还应回到实际代码验证，不能把视频观看或 AI 已生成代码等同于个人掌握。</p>
+<h4 id="intro-先学后端核心">先学：后端核心</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>技术</th>
+<th>中文视频与观看范围</th>
+<th>学完应能解释</th>
+<th>建议投入</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MyBatis + MySQL LIMIT/OFFSET</td>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=94">Tilas P94–95：分页原理与实现</a></td>
+<td>COUNT 和当前页查询为什么分开；offset=(page-1)×pageSize；为什么不先把全表查进 Java 内存</td>
+<td>30–45 分钟</td>
+</tr>
+<tr>
+<td>Spring 事务 + 唯一约束/CHECK</td>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=101">Tilas P101–103：事务</a>；<a href="https://www.bilibili.com/video/BV1Kr4y1i7ru/">黑马 MySQL</a>基础篇的约束部分</td>
+<td>批量导入中途失败为什么要全部回滚；为什么 Service 校验后还需要数据库约束</td>
+<td>60–90 分钟</td>
+</tr>
+<tr>
+<td>InnoDB 行锁 + READ COMMITTED</td>
+<td><a href="https://www.bilibili.com/video/BV1Kr4y1i7ru/?p=54">黑马 MySQL 并发事务与隔离级别</a>；<a href="https://www.bilibili.com/video/BV1Z8411F7M3/?p=8">行锁专题第 8–9 节</a></td>
+<td>两人抢最后一个名额时，FOR UPDATE 如何让操作排队；READ COMMITTED 下普通查询的可见性</td>
+<td>45–60 分钟</td>
+</tr>
+<tr>
+<td>version 乐观锁</td>
+<td><a href="https://www.bilibili.com/video/BV12R4y157Be/">尚硅谷 MyBatis-Plus</a>，选看标题编号 45–47</td>
+<td>两人读到同一个旧版本时，UPDATE WHERE id=? AND version=? 为什么只允许一次成功</td>
+<td>20–30 分钟</td>
+</tr>
+<tr>
+<td>Spring Security + JWT + BCrypt</td>
+<td><a href="https://www.bilibili.com/video/BV1mm4y1X7Hc/">三更草堂 Spring Security</a>，先看标题编号 04、06、08、13、14、23–24（编号从 00 开始，非播放器 P 编号）</td>
+<td>身份认证和权限校验的区别；JWT 验签与有效期；BCrypt 如何验证密码</td>
+<td>60–90 分钟</td>
+</tr>
+<tr>
+<td>JUnit + Mockito + MockMvc</td>
+<td><a href="https://www.bilibili.com/video/BV15S4y1F7Xr/">Mockito + JUnit 5 快速入门</a>，约 25 分钟；<a href="https://www.bilibili.com/video/BV1aU4y187uT/">图灵 Spring Boot 课程</a>中 MockMVC 一节，约 23 分钟</td>
+<td>断言、模拟依赖、接口格式测试分别做什么；为什么还要连接真实 MySQL 验证</td>
+<td>60–90 分钟</td>
+</tr>
+</tbody>
+</table></div>
+<p>MyBatis-Plus 视频只用于理解乐观锁原理；当前学序使用 MyBatis 手写版本条件更新，无需为看视频而引入插件。三更课程是较早版本，重点学习流程；项目使用 Spring Boot 4，实际配置对照 SecurityConfig 中的 SecurityFilterChain，保留当前依赖体系。</p>
+<h4 id="intro-再补前端数值与辅助工具">再补：前端、数值与辅助工具</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>技术</th>
+<th>中文视频与范围</th>
+<th>第一轮目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TypeScript</td>
+<td><a href="https://www.bilibili.com/video/BV1YS411w7Bf/">尚硅谷：三小时快速上手 TypeScript</a>；先上篇，再补 interface/type、联合类型、可选属性和泛型</td>
+<td>看懂接口返回类型和组件参数；暂缓装饰器</td>
+</tr>
+<tr>
+<td>Vite + 同源 /api 代理</td>
+<td><a href="https://www.bilibili.com/video/BV1GN4y1M7P5/">付金权的 Vite 课程</a>中“跨域原理简单了解以及 vite 配置跨域”，约 42 分钟；部署时补 <a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=189">Tilas P189–190</a></td>
+<td>画出浏览器 → Vite/Nginx → Java 的请求路径；区分开发代理和生产部署</td>
+</tr>
+<tr>
+<td>BigDecimal / DECIMAL</td>
+<td><a href="https://www.bilibili.com/video/BV1TE41177mP/">黑马 Java 进阶</a>中“BigDecimal解决精度运算问题”，约 8 分钟；DECIMAL 对照 MySQL 数据类型章节</td>
+<td>理解浮点误差、精确十进制计算和舍入；区分 0 与 null</td>
+</tr>
+<tr>
+<td>Logback</td>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=84">Tilas P84–85</a></td>
+<td>理解级别、logger/root/appender、文件输出；能解释全局 DEBUG 刷屏，以及同步控制台阻塞为何拖住请求</td>
+</tr>
+<tr>
+<td>Apache Commons CSV + 全批事务</td>
+<td><a href="https://www.bilibili.com/video/BV1sV4y1f7V1/">小枫 Geek：CSV 文件入门</a>，约 5 分钟；Java 用法补 <a href="https://commons.apache.org/proper/commons-csv/apidocs/index.html">Commons CSV 官方示例</a></td>
+<td>视频使用 Python，仅用于了解 CSV 格式，不是该 Java 库的教程；对照 importCsv 理解解析、全量校验和事务写入</td>
+</tr>
+<tr>
+<td>Flyway</td>
+<td><a href="https://www.bilibili.com/video/BV1zm421K7Wn/">使用 flyway 完成 SQL 迁移</a>，约 101 分钟，作为开发实录备选；快速理解可先看 <a href="https://documentation.red-gate.com/flyway/getting-started-with-flyway">官方工作流程图解</a></td>
+<td>本次未筛到足够合适的中文速成短课；先理解扫描版本脚本、比对历史表、顺序执行待迁移脚本；对照当前 V1/V2 文件</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="intro-两个结合代码理解的设计方法">两个结合代码理解的设计方法</h4>
+<p><strong>token_version：</strong>先理解 JWT，再看三更课程标题编号 21 的退出登录。这节用于理解退出登录的问题，并不等于讲解学序的版本号方案。学序登录时将数据库当前版本写入 JWT；退出、改密或停用账户时递增数据库版本；每次请求比较数据库 tokenVersion 与 JWT ver，旧令牌的版本不符即拒绝。示例：令牌版本 3、数据库版本 3 时允许访问；退出后数据库变为 4，旧令牌 3 被拒绝。实现入口：SecurityConfig.decoder、AuthService 和账户更新 SQL。</p>
+<p><strong>REQUIRES_NEW 审计：</strong>观看 <a href="https://www.bilibili.com/video/BV1AP411s7D7/">尚硅谷 SSM</a>中标题编号 065 的事务传播行为，约 14 分钟。然后读 AuditService.record：业务失败需要回滚，记录“这次操作失败了”的审计仍需保留，因此通过独立事务提交。不要把该数据库审计事务与 Logback 的普通运行日志混为一谈。</p>
+<h4 id="intro-每组看完做一个小实验">每组看完做一个小实验</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>知识点</th>
+<th>学序中的验证动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分页</td>
+<td>切换第一页/第二页和搜索条件，检查 items、total、page 与数据库一致</td>
+</tr>
+<tr>
+<td>事务和约束</td>
+<td>在独立测试库中让批量操作中途失败，检查前面的写入也没有保留</td>
+</tr>
+<tr>
+<td>行锁与隔离级别</td>
+<td>在独立测试库中让两人竞争最后一个选课名额，检查仅一人成功</td>
+</tr>
+<tr>
+<td>乐观锁</td>
+<td>保存后再次提交旧 version，检查返回 409，原值不被覆盖</td>
+</tr>
+<tr>
+<td>认证和权限</td>
+<td>检查未登录 401、越权 403，以及退出后旧令牌无法继续使用</td>
+</tr>
+<tr>
+<td>日志</td>
+<td>对照日志定位一次接口失败，了解控制台输出与滚动文件的区别</td>
+</tr>
+<tr>
+<td>测试</td>
+<td>为正常和失败路径写断言，再通过真实接口及数据库核对一次</td>
+</tr>
+</tbody>
+</table></div>
+<p>验证层次：JUnit/Mockito 检查业务判断并可模拟依赖；MockMvc 检查 Web 请求和响应行为；真实 HTTP/MySQL 检查实际服务、SQL、约束及事务；浏览器操作检查用户能否完成流程并看到正确结果。四层互相补充。</p>
+<h2 id="intro-3-三个适合重点讲解的难点">3. 三个适合重点讲解的难点</h2>
+<h3 id="intro-31-最后一个名额的并发竞争">3.1 最后一个名额的并发竞争</h3>
+<p>先查询人数、再判断、再插入不是原子操作，两个请求都可能看到还有一个名额。实现时锁定同一门课程，把容量判断和选课、空成绩初始化放进一个事务，所有修改此课程参与人数的操作遵守同一锁顺序。</p>
+<p>真实测试中还发现：虽然已加课程行锁，事务早先读取账户建立的 REPEATABLE READ 快照仍可能让后续普通人数查询读到旧值。因此将连接隔离设为 READ COMMITTED，并在选课事务明确指定该隔离级别。修正后同时抢一个名额的两次请求结果为一个成功、一个容量不足，数据库只增加一个关联。这是两请求竞争的功能验收，不是高并发压测。</p>
+<p>这一设计与 MySQL 官方关于<a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html">事务隔离和一致性读</a>、<a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html">锁定读</a>的说明相对应。</p>
+<h3 id="intro-32-防止批量成绩出现部分成功或覆盖">3.2 防止批量成绩出现部分成功或覆盖</h3>
+<p>每个成绩行有独立 version。两个人读到 version=0 后，一方保存使其变为 1；另一方继续提交 0 时，条件更新影响 0 行，后端返回 409。对一批成绩，哪怕前几条已经执行更新，只要后面一条发生版本冲突，整个事务都回滚。</p>
+<p>前端保留失败草稿，提示重新加载后处理冲突，不自动重试覆盖他人的数据。验收特意让批量中的后一条使用旧版本，再查询数据库确认前一条也没有留下修改。</p>
+<h3 id="intro-33-角色权限和对象范围同时控制">3.3 角色权限和对象范围同时控制</h3>
+<p>管理员、教师和学生不是只在前端显示不同菜单。教师查询课程、学生、成绩、考勤及报表时都带自己的授权范围；改 URL 请求另一门课程同样会被后端拒绝。学生账户以数据库 student_id 绑定身份，门户和报表按该绑定限制，不能靠请求传 studentId 看别人。</p>
+<p>JWT 的签名和有效期由 Spring Security Resource Server 处理，密码用 BCrypt；另外通过 token_version 补上退出、改密和禁用后的即时撤销。选用成熟认证组件的依据见 <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html">Spring Security JWT 文档</a>。</p>
+<h2 id="intro-4-核心业务和数据库设计">4. 核心业务和数据库设计</h2>
+<p>数据关系：班级有学生；学生和课程通过 enrollment 多对多；课程有多次 exam；每名选课学生在每次考试有一条 grade；课程每天有一张 attendance_sheet，其下是学生点名明细。user_course 只控制教师权限，不承担学生选课含义。</p>
+<p>11 张业务表均不设置外键，保留用户此前的建模约定。Service 负责关联存在性、删除顺序、引用保护和事务；数据库仍通过主键、唯一键、索引和 CHECK 兜底。这样的设计适合学习显式业务一致性，也意味着绕过 Service 手动修改数据库可能产生孤儿记录，不能宣称没有外键仍自动级联。</p>
+<p>旧学生库升级由 Flyway 追踪，已有 ID 不变；已有 V1 课程成绩迁入默认考试，已有成绩/点名关联转换为显式选课。没有现成关联的学生不自动加入所有课程。关于 Boot 集成迁移的依据见 <a href="https://docs.spring.io/spring-boot/how-to/data-initialization.html">Spring Boot 数据库初始化文档</a>。</p>
+<h2 id="intro-5-可以放进简历的项目表述">5. 可以放进简历的项目表述</h2>
+<p><strong>学序 EduFlow 教务管理系统｜Java 21、Spring Boot、Spring Security、MyBatis、MySQL、React、TypeScript</strong></p>
+<ul>
+<li>实现管理员、教师和学生的完整教务流程，包括学生档案、班级/课程、独立选课、多次考试、成绩、考勤和学业报表。</li>
+<li>通过 JWT/BCrypt、角色及课程范围校验实现后端授权，并使用账户令牌版本处理退出、改密和禁用后的访问撤销。</li>
+<li>使用 InnoDB 行锁与 READ COMMITTED 保护选课容量，以版本条件更新防止成绩和点名覆盖；通过事务保证 CSV 导入、批量成绩和关联删除全成全败。</li>
+<li>使用 MyBatis 完成数据库条件分页与多表加权统计，以 Flyway 管理旧库升级，结合 JUnit/MockMvc、真实 MySQL HTTP 验收和浏览器联调核查关键流程。</li>
+</ul>
+<p>以上是实现内容摘要，不等于个人已独立掌握。投递前应能脱离 AI 讲清请求链路、写出学生 CRUD/分页、解释事务和版本冲突，并独立修改一条规则。不要补写“已服务多少用户”“高并发吞吐提升多少”“生产零事故”等未经测量的成果。</p>
+<h2 id="intro-6-实际验证与交付边界">6. 实际验证与交付边界</h2>
+<p>2026-10-23 的 V2 验证执行后端 Maven package（21 项 JUnit/MockMvc/日志练习测试）、前端 10 项领域测试、TypeScript/Vite 构建，以及独立 MySQL 上的 13 组真实 HTTP 业务验收。另验证旧学生单表库升级保留原有样例、浏览器学生新增和成绩保存。最终执行明细、备份恢复与产物启动证据见<a href="#verification">完整验收记录</a>。</p>
+<p>2026-10-24 补充修复学生档案请求被同步控制台日志阻塞的问题：新增 ConsoleLoggingTest，模拟终端不消费输出，1000 条业务日志全部写入滚动文件且请求线程不等待控制台。后端 22 项测试及前端构建通过，常用库学生分页/搜索真实 HTTP 与 Chrome 页面验证通过。本次没有重跑前述 13 组全量业务验收，具体范围见验收记录第 6 节。</p>
+<p>提供 Dockerfile、Nginx、Compose 和 GitHub Actions；本机没有 Docker，未实测容器构建或 GitHub 云端执行，也没有发布公网。生产还需要 HTTPS、真实环境密钥、备份计划和运行监控。项目面向小规模工作区，除学生外部分名单/报表仍整组读取，没有大规模压测。业务审计记录动作/结果及版本摘要，不提供逐单元格成绩修改历史，也不覆盖进入控制器前被安全过滤链拒绝的请求。</p>
+<h2 id="intro-7-代码阅读入口">7. 代码阅读入口</h2>
+<p>从 <code>frontend/src/v2/WorkspaceApp.tsx</code> 选一页，再看 client.ts 中请求；Java 依次追踪 controller → service → mapper → MySQL。建议先读 StudentController/StudentServiceImpl/StudentMapper，再读 AcademicService 的 enroll/saveGrades/saveAttendance，最后看 SecurityConfig、CurrentUser、ReportService 和迁移。</p>
+<p>旧版前端保留在 src/App.tsx、src/pages、src/lib/api.ts/seed.ts，正式 main.tsx 已使用 V2。学习时可比较相同 CRUD 的前后差异，避免把旧 mock 当作当前后端行为。</p></article>
+<article class="document" id="document-requirements" data-doc="requirements" hidden><h1 id="requirements-学序-eduflow-v2-需求与验收">学序 EduFlow · V2 需求与验收</h1>
+<p>版本：2.0.0 · 更新：2026-10-23。本文与当前 V2 入口 <code>frontend/src/v2/WorkspaceApp.tsx</code>、Java 实现和 Flyway 迁移同步。旧 V1 文档已于 2026-10-24 精简移除，当前以本文为准；学习进度仍以本人掌握程度为准。</p>
+<p>相关文档：<a href="#intro">项目介绍</a> · <a href="#api">接口文档</a> · <a href="#plan">学习规划</a>。实际验证记录见 <code>docs/验收记录.md</code>。</p>
+<h2 id="requirements-1-目标与交付范围">1. 目标与交付范围</h2>
+<p>实现从建班、建档、开课、授权、选课，到考试、成绩、点名和学业分析的真实教务流程。所有 V2 页面访问 Java HTTP 接口和 MySQL；不以 localStorage 或 mock 代替业务持久化。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>需求</th>
+<th>V2 行为</th>
+<th>实现位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-STU-01–08 学生管理</td>
+<td>SQL 条件分页、详情、新增修改、CSV 导入导出、单个及批量删除</td>
+<td>People / StudentController / StudentServiceImpl / StudentMapper</td>
+</tr>
+<tr>
+<td>REQ-CRS-01–04 课程管理</td>
+<td>卡片和列表、关键词和类别筛选、详情、增改删、容量统计</td>
+<td>Curriculum / AcademicService</td>
+</tr>
+<tr>
+<td>REQ-GRD-01–05 成绩管理</td>
+<td>按课程及考试录分、班级与关键词筛选、分页、分布、导出、草稿保护</td>
+<td>Assessment / AcademicService</td>
+</tr>
+<tr>
+<td>REQ-ATT-01–04 考勤</td>
+<td>日期、课程、班级及关键词筛选，点名、整表保存、历史回显、导出</td>
+<td>AttendancePage / AcademicService</td>
+</tr>
+<tr>
+<td>REQ-DSH-01–03 工作台</td>
+<td>授权范围内指标、班级分布、建档趋势、最近学生、每周课程及快捷入口</td>
+<td>DashboardPage / ReportService</td>
+</tr>
+<tr>
+<td>REQ-AUTH-01–04 登录权限</td>
+<td>JWT、BCrypt、角色与课程授权、401 登录、403 提示、退出和改密撤销</td>
+<td>SecurityConfig / CurrentUser / AuthService</td>
+</tr>
+<tr>
+<td>REQ-AUD-01 操作审计</td>
+<td>写操作的操作者、目标、结果与时间；单目标修改的存在性/版本摘要；失败独立提交</td>
+<td>AuditConfig / AuditService</td>
+</tr>
+<tr>
+<td>V2-CLASS 班级维护</td>
+<td>独立班级实体、专业同步、被学生引用时拒绝删除</td>
+<td>Classes / eduflow_class</td>
+</tr>
+<tr>
+<td>V2-ENROLL 独立选课</td>
+<td>管理员批量选课、学生自助选退课、容量并发保护、历史保护</td>
+<td>Enrollments / PortalPage / eduflow_enrollment</td>
+</tr>
+<tr>
+<td>V2-PORTAL 学生门户</td>
+<td>只展示本人档案、课程、每次考试成绩和考勤</td>
+<td>PortalPage / GET /portal</td>
+</tr>
+<tr>
+<td>V2-EXAM 多次考试</td>
+<td>每课程多次考试、日期和权重、各次成绩独立保存、加权汇总</td>
+<td>Assessment / eduflow_exam</td>
+</tr>
+<tr>
+<td>V2-VERSION 并发版本</td>
+<td>学生、班级、课程、考试、成绩和点名表版本冲突返回 409</td>
+<td>version 条件更新 / 事务</td>
+</tr>
+<tr>
+<td>V2-REPORT 综合报表</td>
+<td>按课程、班级、日期联查，完成度、均分、出勤率、预警及 CSV</td>
+<td>ReportsPage / ReportService</td>
+</tr>
+</tbody>
+</table></div>
+<p>不纳入：Tlias 人事管理、身份证/违纪扣分、文件上传/OSS、支付、微服务、Redis/MQ、AI/RAG、学期管理及排课冲突引擎。课程上课时间按学校本地钟表时间处理，不提供跨时区排课。</p>
+<h2 id="requirements-2-角色和数据范围">2. 角色和数据范围</h2>
+<p>公共界面 REQ-UI-01–05：保留页面导航与刷新定位、窄屏菜单、全局学生搜索（管理员/教师，Ctrl/Cmd+K 聚焦并跳转学生页）、加载/错误/空状态、成绩/考勤草稿保护及文档帮助。本机显示名称按账户 ID 保存在当前浏览器，不改变数据库角色或数据范围；个人设置同时提供真实改密入口。固定演示通知不作为真实消息系统交付。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>能力</th>
+<th>ADMIN</th>
+<th>TEACHER</th>
+<th>STUDENT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>学生列表和详情</td>
+<td>全部</td>
+<td>仅本人授权课程的选课学生；隐藏手机号和邮箱</td>
+<td>禁止；通过门户查看本人</td>
+</tr>
+<tr>
+<td>学生及班级维护、CSV 导入、删除</td>
+<td>允许</td>
+<td>禁止</td>
+<td>禁止</td>
+</tr>
+<tr>
+<td>课程目录</td>
+<td>全部</td>
+<td>仅授权课程</td>
+<td>可查看选课目录及容量，不含其他学生名单</td>
+</tr>
+<tr>
+<td>课程维护及管理员选课</td>
+<td>允许</td>
+<td>禁止</td>
+<td>禁止</td>
+</tr>
+<tr>
+<td>考试、成绩、点名</td>
+<td>全部</td>
+<td>仅授权课程</td>
+<td>禁止操作；门户只读本人</td>
+</tr>
+<tr>
+<td>学生自助选退课</td>
+<td>通过管理入口</td>
+<td>禁止</td>
+<td>仅本人</td>
+</tr>
+<tr>
+<td>综合统计</td>
+<td>全部</td>
+<td>仅授权课程和对应学生</td>
+<td>/reports 只返回本人记录；页面使用门户</td>
+</tr>
+<tr>
+<td>账户开通、启停、教师课程授权及审计</td>
+<td>允许</td>
+<td>禁止</td>
+<td>禁止</td>
+</tr>
+<tr>
+<td>改自己的密码和退出</td>
+<td>允许</td>
+<td>允许</td>
+<td>允许</td>
+</tr>
+</tbody>
+</table></div>
+<p>后端从已验签的 JWT subject 查询真实账户；请求体中的角色、operatorId 或 enrolled 不能扩大权限。教师授权每次请求检查数据库，撤销后立即生效。学生身份由账户的唯一 student_id 绑定，不能在门户提交他人 ID。</p>
+<p>首次空账户库必须设置 ADMIN_PASSWORD，以 BCrypt 初始化 admin；没有公开默认密码。JWT_SECRET 至少 32 字节；密钥/数据库密码从环境变量读取。JWT 有效期 1800 秒，验证签名、issuer、时间、enabled 与 token_version。退出、改密和账户启停增加 token_version，因此所有旧登录失效。客户端令牌仅保存在 sessionStorage；不提供刷新令牌。</p>
+<h2 id="requirements-3-学生档案和班级">3. 学生档案和班级</h2>
+<ul>
+<li>学号去首尾空白，4–20 位字母数字短横线，数据库唯一索引以 utf8mb4_0900_ai_ci 比较；姓名去空白后 1–30 字。</li>
+<li>性别：男/女/未说明；学籍：在读/休学/已毕业。日期必须为真实 YYYY-MM-DD，年份 1000–9999。</li>
+<li>班级必须存在于班级表，专业只由该班级的 major 推导，不信任客户端 major。</li>
+<li>手机可空，非空为 <code>1[3-9]</code> 开头的 11 位数字；邮箱可空，非空校验格式，最多 254 字。</li>
+<li>关键词匹配姓名、学号、手机号，可组合班级与学籍。page≥1，pageSize 1–200；MySQL COUNT 与 LIMIT/OFFSET，按创建时间和 ID 倒序稳定分页。</li>
+<li>编辑必须传 version，更新成功加一；旧版本 409。body.id 不改变路径目标。</li>
+<li>班级名称和专业均 1–40 字；名称唯一。修改名称/专业时事务同步学生资料并增加学生版本；已有学生的班级不能删除。</li>
+<li>新增学生不自动选课；选课关系有单独入口。</li>
+</ul>
+<h3 id="requirements-31-删除">3.1 删除</h3>
+<p>仅管理员可删除 1–500 个不重复学生 ID，存在任一无效目标时整批回滚。正常删除同时清理该学生的选课、全部考试成绩、考勤明细，禁用并解绑学生账户、撤销其旧令牌；保留课程、考试及点名表本身。页面确认框必须提示关联数据和不可恢复性。无外键场景由 Service 保证清理；不删除其他学生记录。</p>
+<h3 id="requirements-32-csv">3.2 CSV</h3>
+<p>表头固定：<code>学号,姓名,性别,班级,手机号,邮箱,状态,入学日期</code>。UTF-8 可带 BOM，文件不超过 2 MiB，1–500 条数据记录；支持带引号的逗号、换行和双引号。JSON 方式上传 <code>{csv:"..."}</code>，JSON 请求体额外限制 16 MiB，避免转义后合法 CSV 被 2 MiB HTTP 限制截断。</p>
+<p>Apache Commons CSV 解析后，逐条校验并报告 CSV 记录号（含表头；带引号跨行记录不等于物理文本行号）。文件内及数据库重复、非法字段/日期、错误表头/列数、坏引号均整批拒绝，异常后没有部分学生落库。文件和数据库的比较规则不同造成的唯一键冲突仍会在事务内整批回滚，返回 409。导出可选当前筛选结果或已选学生，正确转义并阻断电子表格公式；只导出有权限的数据。</p>
+<h2 id="requirements-4-课程和选课">4. 课程和选课</h2>
+<p>课程代码 2–20 位字母数字短横线，唯一；名称 1–40 字，教师显示名 1–50 字、教室 1–100 字；简介 0–200 字。类别为专业必修/公共基础/专业选修。学分 0.5–10、步长 0.5；课时整数 1–300；容量整数 1–10000；星期整数 1–7；时间 HH:mm–HH:mm，同一天内结束晚于开始。颜色为 orange/blue/purple/teal/pink/amber。</p>
+<p>teacher 是显示名称；教师权限依赖独立 user_course 授权，不能靠同名判断。enrolled 从 enrollment 计数，前端不能覆盖。创建课程自动建立“课程考核”默认考试，初始权重 100；修改课程必须带 version，容量不得低于当前选课人数。</p>
+<p>管理员一次为 1–500 个不同的在读学生选课；学生只可为本人选课。课程行 FOR UPDATE 加锁，使用 READ COMMITTED 后查询最新人数，避免旧快照导致超额。任一学生不存在、重复选课、学籍不符或容量不足则整批失败。选课同时为该课程的全部考试初始化 null 成绩；新增考试也为所有已选学生初始化成绩。</p>
+<p>退课仅限尚无已录入成绩且没有历史考勤的关系；允许清理其空成绩后退课。课程存在选课或成绩/点名历史时拒绝删除；可删除空课程及其空考试和教师授权。删除课程和考试需要 version。</p>
+<h2 id="requirements-5-考试和成绩">5. 考试和成绩</h2>
+<p>每课程可有多次考试。名称 1–40 字、同课程内唯一；真实日期；weight 为 0.01–100 的相对权重、最多两位小数。权重不要求加起来为 100，汇总时归一化。管理员和该课程教师可管理考试，已有非 null 成绩的考试不能删除。</p>
+<p>每名选课学生每次考试恰有一条成绩，唯一键为 <code>(exam_id,student_id)</code>。score 为 null 或 0–100、最多两位小数；null 不等于 0。修改按学生提交 <code>{studentId,score,version}</code>，禁止重复和课程外学生；缺失 score 无效，清空使用 null。</p>
+<p>一批最多 10000 个修改项，在同一事务中条件更新；任意输入非法、版本冲突或 SQL 失败均回滚整批。成绩页先选真实课程再加载考试，不请求固定演示 ID。班级/姓名/学号筛选和分页影响表格与导出；统计针对当前考试的全部已保存成绩，不受表格筛选影响。显示平均分、及格率、优秀人数和四级分布；未录入不进入分母。</p>
+<p>编辑草稿在保存失败后保留；切换课程/考试、导航或关闭页面需确认。未保存修改时禁用导出和考试管理，避免导出范围与状态混淆。</p>
+<h2 id="requirements-6-考勤">6. 考勤</h2>
+<p>每课程每日一张点名表，唯一键 <code>(course_id,attendance_date)</code>；状态 present/late/absent/leave。首次 GET 只为当前在读且已选课学生组装预填出勤记录，savedAt=null、version=-1，不创建数据库历史。</p>
+<p>首次保存 version=-1，之后更新带服务器 version。请求提交完整名单，不能只交筛选结果；“当前筛选全部出勤”只修改界面筛选范围，最终仍提交全部名单。重复、漏交、课程外学生和过期版本均拒绝。表头与全部明细在同一事务保存，重复保存更新原表。已保存表从历史明细读取名单，即使学生后来休学/毕业也保留；学生被明确关联删除属于第 3.1 节的例外。</p>
+<p>没有保存过不能导出或计入统计；有草稿禁止导出，离开需确认，保存失败保留草稿。</p>
+<h2 id="requirements-7-工作台和综合报表">7. 工作台和综合报表</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>学生/在读数</td>
+<td>管理员统计全部档案；教师只统计授权课程的选课学生并去重</td>
+</tr>
+<tr>
+<td>课程人数</td>
+<td>对应 enrollment 行数</td>
+</tr>
+<tr>
+<td>当前考试均分/及格率</td>
+<td>已录入分数之和 / 非 null 数；分数≥60 的非 null 数 / 非 null 数</td>
+</tr>
+<tr>
+<td>成绩分布</td>
+<td>优秀≥90，良好[80,90)，合格[60,80)，待提升[0,60)；空值不计</td>
+</tr>
+<tr>
+<td>学生课程加权均分</td>
+<td>Σ(已录入分数×考试权重) / Σ(已录入权重)；未完成项不按 0，另显示完成度</td>
+</tr>
+<tr>
+<td>工作台均分</td>
+<td>已有成绩的学生课程加权均分再取算术平均，页面标注这一口径</td>
+</tr>
+<tr>
+<td>出勤率</td>
+<td>(present+late) / 全部已保存考勤明细；leave 也进入分母</td>
+</tr>
+<tr>
+<td>建档趋势</td>
+<td>当前保留的档案按 create_time 月份聚合；属于建档时间分布，不是不可变历史快照</td>
+</tr>
+</tbody>
+</table></div>
+<p>零数据返回数量 0，报表无成绩/考勤值为 null，页面显示“— / 未录入 / 未点名”，不伪造 96.8% 或上期比较。教师不显示全校建档趋势。</p>
+<p>报表按课程、班级和起止日期筛选。日期区间分别约束考试 exam_date 和考勤 attendance_date，边界包含当天；选课存在但区间内无考试仍可显示 0/0 和无成绩。记录以“学生×课程”为单位，分页展示并支持 CSV 导出。预警筛选：已录入均分&lt;60 或已有点名的出勤率&lt;80%；没有数据的学生不自动判低分，完成度单列。</p>
+<h2 id="requirements-8-数据结构事务与审计">8. 数据结构、事务与审计</h2>
+<p>11 张业务表：student、class、course、enrollment、exam、grade、attendance_sheet、attendance_record、user、user_course、operation_log；另有 flyway_schema_history。沿用 eduflow_ 前缀，均不设外键。</p>
+<p>V1 迁移创建原 8 表；V2 新增班级、选课、考试及版本字段。已有学生 ID/资料保留；已有课程成绩迁到默认考试；只把已存在的成绩/点名关联转成选课，不为全部学生隐式选课。Flyway 为旧非空库登记 baseline 0 后顺序升级，仅执行一次。升级前备份，禁止在已有 V2 库反复手动执行 ALTER。</p>
+<p>Service 使用事务处理班级同步、选课/退课、CSV、成绩、删除和点名。课程行锁先于学生行锁；version 条件更新负责拒绝陈旧编辑，事务隔离使用 READ COMMITTED。唯一索引负责最终冲突兜底，CHECK 约束负责合法数值和枚举。</p>
+<p>审计记录写操作的 HTTP 结果、真实 operator_id、动作、目标和时间。学生/课程/班级/账户的单目标更新、删除记录存在性及版本前后摘要，不复制姓名、手机号、密码或 Token；批量写入记录动作及结果摘要，不宣称拥有逐单元格的成绩变更历史。失败审计通过 REQUIRES_NEW 在业务回滚后保存。Spring Security 过滤链拒绝、413 等未进入控制器的请求不属于业务审计表覆盖范围。</p>
+<h2 id="requirements-9-非功能要求与边界">9. 非功能要求与边界</h2>
+<ul>
+<li>默认回环地址运行；开发 Vite 代理 /api，生产产物提供本地同源代理和 Nginx/Compose 配置。公开部署需要另配 HTTPS、真实域名、备份和运行监控。</li>
+<li>Java 21、Spring Boot 4.0.8、MyBatis 4.0.1、MySQL 8.0.34；React 19、TypeScript 5.8、Vite 6.4。依赖由 Boot BOM 对齐，日志全局 INFO。</li>
+<li>参数绑定 SQL，无客户端 SQL 拼接；统一 <code>{code,msg,data}</code>，区分 400/401/403/404/409/413/429/500。</li>
+<li>保存中防重复操作，错误提示可重试，窄屏导航和表格滚动可用；sessionStorage 令牌不代表具备 HttpOnly Cookie 的 XSS 隔离能力。</li>
+<li>学生查询在数据库分页；课程、选课名单、考试、成绩、考勤和综合报表面向小规模工作区，整组读取后前端分页。未做压测，不承诺大型学校或高并发性能。</li>
+<li>提供环境变量、初始管理员、版本化迁移、自动验收、产物启动、Docker 配置及 CI；不能将配置已写好说成 Docker/公网已经实测上线。</li>
+</ul>
+<h2 id="requirements-10-验收标准和证据">10. 验收标准和证据</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>验收项</th>
+<th>必须验证的结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AC-01–04 档案与分页</td>
+<td>正常 CRUD、重启后持久化、学号冲突、非法数据拒绝、稳定分页、真实 SQL 条件查询</td>
+</tr>
+<tr>
+<td>AC-05 课程</td>
+<td>正确回显、代码唯一、容量下界与并发名额保护</td>
+</tr>
+<tr>
+<td>AC-06–08 成绩</td>
+<td>null/0/边界/小数、全批回滚、多次考试隔离、唯一记录、旧版本拒绝</td>
+</tr>
+<tr>
+<td>AC-09 权限</td>
+<td>匿名、坏签名、过期/注销 JWT 为 401；教师越权和学生冒充他人为 403</td>
+</tr>
+<tr>
+<td>AC-10 CSV</td>
+<td>BOM、引号、坏字段、重复、体积及行数限制；整批失败无部分写入</td>
+</tr>
+<tr>
+<td>AC-11 删除</td>
+<td>含无效目标时不删除任何人；正常关联清理、账户禁用及令牌撤销</td>
+</tr>
+<tr>
+<td>AC-12 点名</td>
+<td>虚拟表不落库、完整名单、历史名单、重复保存和首次保存并发冲突</td>
+</tr>
+<tr>
+<td>AC-13 草稿</td>
+<td>保存失败保留，离开/切换提示，保存中禁用重复提交</td>
+</tr>
+<tr>
+<td>AC-14 统计</td>
+<td>空数据、零分、权重、考勤分母、教师范围及报表日期过滤</td>
+</tr>
+<tr>
+<td>AC-15 运行</td>
+<td>干净库和旧学生库升级、产物运行、备份恢复、说明可复现</td>
+</tr>
+<tr>
+<td>V2 扩展</td>
+<td>班级同步、学生自助、考试维护、行版本冲突、综合报表与预警</td>
+</tr>
+</tbody>
+</table></div>
+<p>详细执行结果及尚未执行的环境项见 <code>docs/验收记录.md</code>。软件交付不等同于已经掌握课程；简历中的个人能力仍需能独立解释与修改。</p></article>
+<article class="document" id="document-api" data-doc="api" hidden><h1 id="api-学序-eduflow-v2-接口文档">学序 EduFlow · V2 接口文档</h1>
+<p>版本：2.0.0 · 更新：2026-10-23。适用于当前 V2 前端与 Java 后端。旧 V1 文档已于 2026-10-24 精简移除，当前接口以本文为准。</p>
+<p>相关文档：<a href="#requirements">需求与验收</a> · <a href="#intro">项目介绍</a> · <a href="#plan">学习规划</a>。</p>
+<h2 id="api-1-调用约定">1. 调用约定</h2>
+<p>开发浏览器地址 127.0.0.1:5173，通过 <code>/api</code> 代理；后端默认 127.0.0.1:8081，路径不带 /api。生产 Nginx 或本地静态产物服务器同样提供 /api。以 <code>GET /students</code> 表示后端路径。</p>
+<p>除 POST /auth/login 和 GET /health，所有接口需要 <code>Authorization: Bearer &lt;token&gt;</code>。JSON 写请求使用 application/json。ID 为字符串，新增时服务端生成 UUID，兼容旧学生 ID；日期 YYYY-MM-DD；时间为学校本地日期时间，不宣称带 UTC 偏移。</p>
+<p>所有业务返回 JSON，包含 code、msg、data；成功 code=1，失败 code=0；不返回空 204。</p>
+<pre><code class="language-json">{&quot;code&quot;:1,&quot;msg&quot;:&quot;success&quot;,&quot;data&quot;:{&quot;items&quot;:[],&quot;total&quot;:0,&quot;page&quot;:1,&quot;pageSize&quot;:10}}
+</code></pre>
+<pre><code class="language-json">{&quot;code&quot;:0,&quot;msg&quot;:&quot;数据已被修改，请重新加载后再提交&quot;,&quot;data&quot;:null}
+</code></pre>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>HTTP</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>成功，包括创建、更新、删除</td>
+</tr>
+<tr>
+<td>400</td>
+<td>参数、字段、名单或业务规则不合法</td>
+</tr>
+<tr>
+<td>401</td>
+<td>未登录、签名/时间/账户状态无效或已撤销</td>
+</tr>
+<tr>
+<td>403</td>
+<td>角色或课程范围越权</td>
+</tr>
+<tr>
+<td>404</td>
+<td>目标不存在</td>
+</tr>
+<tr>
+<td>405 / 415</td>
+<td>方法不支持 / 请求媒体类型不支持</td>
+</tr>
+<tr>
+<td>409</td>
+<td>唯一键、陈旧版本或并发事务冲突；整批不会部分成功</td>
+</tr>
+<tr>
+<td>413</td>
+<td>HTTP 请求体超过 16 MiB；CSV 文本另外限制 2 MiB</td>
+</tr>
+<tr>
+<td>429</td>
+<td>同来源 IP 一分钟超过 20 次登录尝试</td>
+</tr>
+<tr>
+<td>500</td>
+<td>服务内部失败；不向客户端泄露数据库、密钥或堆栈</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="api-2-认证与账户">2. 认证与账户</h2>
+<p><a id="auth-design"></a></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方法 / 路径</th>
+<th>输入 / 输出</th>
+<th>权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET /health</td>
+<td>data={status:"UP",version:"2.0.0"}，应用存活探针，不保证数据库当时可写</td>
+<td>公开</td>
+</tr>
+<tr>
+<td>POST /auth/login</td>
+<td>{username,password} → {token,expiresIn:1800,user}</td>
+<td>公开</td>
+</tr>
+<tr>
+<td>GET /auth/me</td>
+<td>{id,username,displayName,role,studentId}</td>
+<td>已登录</td>
+</tr>
+<tr>
+<td>POST /auth/logout</td>
+<td>无 body；增加 token_version，使此账户所有旧登录失效</td>
+<td>已登录</td>
+</tr>
+<tr>
+<td>PUT /auth/password</td>
+<td>{oldPassword,password}；12–72 UTF-8 字节，成功后旧登录失效</td>
+<td>已登录</td>
+</tr>
+<tr>
+<td>GET /users</td>
+<td>账户数组：id,username,displayName,role,enabled,studentId,version；不含密码哈希</td>
+<td>ADMIN</td>
+</tr>
+<tr>
+<td>POST /users</td>
+<td>{username,password,displayName,role,studentId?} → 安全账户资料</td>
+<td>ADMIN</td>
+</tr>
+<tr>
+<td>PUT /users/{id}</td>
+<td>{displayName,enabled:0或1,version}；不能禁用自己或重新启用已删除学生档案的账户</td>
+<td>ADMIN</td>
+</tr>
+<tr>
+<td>GET /users/{id}/courses</td>
+<td>[{courseId}]</td>
+<td>ADMIN</td>
+</tr>
+<tr>
+<td>PUT /users/{id}/courses/{courseId}</td>
+<td>无 body，授予教师课程权限，重复授予可安全重试</td>
+<td>ADMIN</td>
+</tr>
+<tr>
+<td>DELETE /users/{id}/courses/{courseId}</td>
+<td>无 body，撤销教师课程权限</td>
+<td>ADMIN</td>
+</tr>
+</tbody>
+</table></div>
+<p>username 为 4–50 位字母数字 . _ -；displayName 1–50 字。role 为 ADMIN/TEACHER/STUDENT；学生账户必须绑定已存在学生，一个学生只能绑定一个账户；教师授权接口仅接受 TEACHER 账户。role/studentId 开通后不可通过账户修改接口更改。</p>
+<p>首次启动空账户库设置环境变量 ADMIN_PASSWORD 和 JWT_SECRET，创建 username=admin。已有 admin 时修改此环境变量不会重置数据库密码；改密使用已登录接口。</p>
+<h2 id="api-3-学生档案">3. 学生档案</h2>
+<p><a id="students-list"></a>
+<a id="students-detail"></a>
+<a id="students-create"></a>
+<a id="students-update"></a>
+<a id="students-delete"></a>
+<a id="students-single-delete"></a>
+<a id="students-batch-delete"></a>
+<a id="students-import"></a></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方法 / 路径</th>
+<th>输入</th>
+<th>data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET /students</td>
+<td>search?,className?,status?,page=1,pageSize=10</td>
+<td>{items:Student[],total,page,pageSize}</td>
+</tr>
+<tr>
+<td>GET /students/{id}</td>
+<td>路径 ID</td>
+<td>Student</td>
+</tr>
+<tr>
+<td>POST /students</td>
+<td>StudentInput</td>
+<td>创建后的 Student，version=0</td>
+</tr>
+<tr>
+<td>PUT /students/{id}</td>
+<td>StudentInput + version</td>
+<td>更新后的 Student，version 加一</td>
+</tr>
+<tr>
+<td>DELETE /students/{id}</td>
+<td>无 body</td>
+<td>null，关联清理与批量删除相同</td>
+</tr>
+<tr>
+<td>POST /students/batch-delete</td>
+<td>{ids:string[]}，1–500 个不同 ID</td>
+<td>null</td>
+</tr>
+<tr>
+<td>POST /students/import</td>
+<td>{csv:string}</td>
+<td>{imported:number}</td>
+</tr>
+</tbody>
+</table></div>
+<p>Student 为 id,studentNo,name,gender,className,major,phone,email,status,enrollmentDate,version。StudentInput 不需要 id/major，后端忽略其对主键/专业的覆盖。查询仅 ADMIN 和 TEACHER；教师只读授权课程的学生，phone/email 返回空字符串。写接口仅 ADMIN。</p>
+<pre><code class="language-json">{&quot;studentNo&quot;:&quot;S20260001&quot;,&quot;name&quot;:&quot;示例学生&quot;,&quot;gender&quot;:&quot;未说明&quot;,&quot;className&quot;:&quot;计算机 2601&quot;,&quot;phone&quot;:&quot;&quot;,&quot;email&quot;:&quot;&quot;,&quot;status&quot;:&quot;在读&quot;,&quot;enrollmentDate&quot;:&quot;2026-09-01&quot;}
+</code></pre>
+<p>更新增加版本：</p>
+<pre><code class="language-json">{&quot;studentNo&quot;:&quot;S20260001&quot;,&quot;name&quot;:&quot;示例学生&quot;,&quot;gender&quot;:&quot;未说明&quot;,&quot;className&quot;:&quot;计算机 2601&quot;,&quot;phone&quot;:&quot;13800000000&quot;,&quot;email&quot;:&quot;&quot;,&quot;status&quot;:&quot;在读&quot;,&quot;enrollmentDate&quot;:&quot;2026-09-01&quot;,&quot;version&quot;:0}
+</code></pre>
+<p>字段规则、CSV 表头与删除策略见<a href="#requirements">需求文档</a>。没有“创建学生即选所有课程”的 V1 行为。学号唯一键冲突为 409；CSV 校验发现重复通常为 400 并定位记录号，数据库最终唯一键冲突为 409。</p>
+<h2 id="api-4-班级">4. 班级</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方法 / 路径</th>
+<th>输入</th>
+<th>data / 规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET /classes</td>
+<td>无</td>
+<td>ClassRoom[]；教师只见授权课程学生涉及的班级与范围内人数</td>
+</tr>
+<tr>
+<td>POST /classes</td>
+<td>{name,major}</td>
+<td>新建班级，version=0</td>
+</tr>
+<tr>
+<td>PUT /classes/{id}</td>
+<td>{name,major,version}</td>
+<td>新班级资料；同步学生名称/专业，学生版本同时递增</td>
+</tr>
+<tr>
+<td>DELETE /classes/{id}?version=0</td>
+<td>查询版本</td>
+<td>null；存在学生时 400</td>
+</tr>
+</tbody>
+</table></div>
+<p>GET 允许 ADMIN/TEACHER；写操作仅 ADMIN。列表 ClassRoom={id,name,major,version,studentCount}。单条创建/更新不返回 studentCount；前端保存后重新加载列表。</p>
+<h2 id="api-5-课程">5. 课程</h2>
+<p><a id="courses-list"></a>
+<a id="courses-create"></a>
+<a id="courses-update"></a></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方法 / 路径</th>
+<th>输入</th>
+<th>data / 权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET /courses</td>
+<td>无</td>
+<td>Course[]；管理员全部，教师授权范围，学生选课目录</td>
+</tr>
+<tr>
+<td>POST /courses</td>
+<td>CourseInput</td>
+<td>新建 Course；ADMIN</td>
+</tr>
+<tr>
+<td>PUT /courses/{id}</td>
+<td>CourseInput + version</td>
+<td>更新 Course；ADMIN</td>
+</tr>
+<tr>
+<td>DELETE /courses/{id}?version=0</td>
+<td>查询版本</td>
+<td>null；ADMIN，存在选课/历史时拒绝</td>
+</tr>
+</tbody>
+</table></div>
+<p>Course={id,code,name,description,teacher,category,credits,hours,enrolled,capacity,room,weekday,time,color,version}；查询还可能含起止时间和系统时间字段，客户端只依赖上述字段。enrolled 动态统计，客户端不可设置。</p>
+<pre><code class="language-json">{&quot;code&quot;:&quot;JAVA101&quot;,&quot;name&quot;:&quot;Java 程序设计&quot;,&quot;description&quot;:&quot;面向对象与 Web 基础&quot;,&quot;teacher&quot;:&quot;示例教师&quot;,&quot;category&quot;:&quot;专业必修&quot;,&quot;credits&quot;:3,&quot;hours&quot;:48,&quot;capacity&quot;:50,&quot;room&quot;:&quot;教学楼 201&quot;,&quot;weekday&quot;:1,&quot;time&quot;:&quot;09:00–10:30&quot;,&quot;color&quot;:&quot;orange&quot;}
+</code></pre>
+<p>课程初始化一项“课程考核”考试，不自动为任何学生选课。教师显示名称与账户授权相互独立。</p>
+<h2 id="api-6-选课">6. 选课</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方法 / 路径</th>
+<th>输入</th>
+<th>data / 权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET /courses/{id}/students</td>
+<td>无</td>
+<td>已选学生必要字段数组，不含电话邮箱；ADMIN 或授权 TEACHER</td>
+</tr>
+<tr>
+<td>POST /courses/{id}/enrollments</td>
+<td>{studentIds:string[]}</td>
+<td>null；ADMIN 批量，STUDENT 只可含本人一个 ID</td>
+</tr>
+<tr>
+<td>DELETE /courses/{id}/enrollments/{studentId}</td>
+<td>无 body</td>
+<td>null；ADMIN 或本人学生；有成绩/考勤时 400</td>
+</tr>
+</tbody>
+</table></div>
+<p>列表按学号排序。1–500 个不同在读学生，服务端锁定课程后检查容量；任一无效目标或容量不足整批失败。选课同时建立该课程每项考试的空白成绩。</p>
+<h2 id="api-7-考试">7. 考试</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方法 / 路径</th>
+<th>输入</th>
+<th>data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET /courses/{id}/exams</td>
+<td>无</td>
+<td>Exam[]，按日期及 ID 排序</td>
+</tr>
+<tr>
+<td>POST /courses/{id}/exams</td>
+<td>{name,examDate,weight}</td>
+<td>新建 Exam；为已选学生初始化成绩</td>
+</tr>
+<tr>
+<td>PUT /courses/{id}/exams/{examId}</td>
+<td>{name,examDate,weight,version}</td>
+<td>更新 Exam</td>
+</tr>
+<tr>
+<td>DELETE /courses/{id}/exams/{examId}?version=0</td>
+<td>查询版本</td>
+<td>null；已录入成绩不能删除</td>
+</tr>
+</tbody>
+</table></div>
+<p>Exam={id,courseId,name,examDate,weight,version}。全部需要 ADMIN 或该课程教师权限。weight 为 0.01–100 相对权重，最多两位小数；同课程名称唯一；考试满分统一为 100。</p>
+<h2 id="api-8-成绩">8. 成绩</h2>
+<p><a id="grades-list"></a>
+<a id="grades-save"></a></p>
+<p>GET /grades?courseId=...&amp;examId=...。examId 可省略，选择该课程按日期和 ID 排序的第一项考试；无考试时 400，页面可通过考试管理补建。返回：</p>
+<pre><code class="language-json">{&quot;code&quot;:1,&quot;msg&quot;:&quot;success&quot;,&quot;data&quot;:{&quot;examId&quot;:&quot;exam-id&quot;,&quot;exams&quot;:[],&quot;students&quot;:[],&quot;grades&quot;:[]}}
+</code></pre>
+<p>实际 exams 为当前课程全部考试；students 为已选学生必要资料；grades 元素为 {id,courseId,examId,studentId,score,version}，score=null 时明确返回 null，不省略字段。</p>
+<p>PUT /grades/batch：</p>
+<pre><code class="language-json">{&quot;courseId&quot;:&quot;course-id&quot;,&quot;examId&quot;:&quot;exam-id&quot;,&quot;scores&quot;:[{&quot;studentId&quot;:&quot;student-id&quot;,&quot;score&quot;:0,&quot;version&quot;:0},{&quot;studentId&quot;:&quot;another-student-id&quot;,&quot;score&quot;:null,&quot;version&quot;:0}]}
+</code></pre>
+<p>成功返回最新 GradeSheet，形状同 GET。score 不能缺失；score 为 null 或 0–100 且最多两位小数；scores 包含 1–10000 个不同选课学生。每个修改项提交读取时的 version；任意一项陈旧返回 409，前面已执行的更新也全部回滚。调用后重新加载后再继续编辑，不能自动覆盖冲突。</p>
+<p>全部需要 ADMIN 或课程教师。导出由前端从已授权查询结果生成，不额外开放后端文件下载接口。</p>
+<h2 id="api-9-考勤">9. 考勤</h2>
+<p><a id="attendance-list"></a>
+<a id="attendance-save"></a></p>
+<p>GET /attendance?courseId=...&amp;date=YYYY-MM-DD，返回：</p>
+<pre><code class="language-json">{&quot;code&quot;:1,&quot;msg&quot;:&quot;success&quot;,&quot;data&quot;:{&quot;courseId&quot;:&quot;course-id&quot;,&quot;date&quot;:&quot;2026-10-23&quot;,&quot;savedAt&quot;:null,&quot;version&quot;:-1,&quot;students&quot;:[],&quot;records&quot;:[]}}
+</code></pre>
+<p>首次虚拟名单为在读选课学生，默认 present，不落库。保存后的 savedAt 为学校本地日期时间字符串，version≥0，历史名单从明细恢复。</p>
+<p>PUT /attendance/batch：</p>
+<pre><code class="language-json">{&quot;courseId&quot;:&quot;course-id&quot;,&quot;date&quot;:&quot;2026-10-23&quot;,&quot;version&quot;:-1,&quot;records&quot;:[{&quot;studentId&quot;:&quot;student-id&quot;,&quot;status&quot;:&quot;present&quot;},{&quot;studentId&quot;:&quot;another-student-id&quot;,&quot;status&quot;:&quot;leave&quot;}]}
+</code></pre>
+<p>提交完整名单而非筛选结果；空班允许 records=[]。状态仅 present/late/absent/leave；首次保存 version=-1，之后带最新版本。名单不全/重复/过期均拒绝；成功返回最新点名表。首次保存并发仅一方成功，另一方 409。全部需要 ADMIN 或课程教师。</p>
+<h2 id="api-10-工作台报表和审计">10. 工作台、报表和审计</h2>
+<p><a id="dashboard-overview"></a></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方法 / 路径</th>
+<th>输入</th>
+<th>data / 权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET /dashboard/overview</td>
+<td>无</td>
+<td>Overview；ADMIN 或 TEACHER，按权限范围</td>
+</tr>
+<tr>
+<td>GET /reports</td>
+<td>courseId?,className?,from?,to?</td>
+<td>Report[]；管理员全部，教师授权范围，学生本人</td>
+</tr>
+<tr>
+<td>GET /audit</td>
+<td>search?,page=1,pageSize=20</td>
+<td>{items,total,page,pageSize}；ADMIN</td>
+</tr>
+<tr>
+<td>GET /portal</td>
+<td>无</td>
+<td>Portal；仅绑定有效学生档案的 STUDENT</td>
+</tr>
+</tbody>
+</table></div>
+<p>Overview 字段：studentCount、activeCount、courseCount、averageScore、attendanceRate、attendanceRecorded、gradeRecorded、recentStudents、classes[{name,count}]、trend[{month,current}]。averageScore 是学生课程加权均分的均值；没有成绩/考勤数值兼容返回 0，同时用 gradeRecorded/attendanceRecorded 区分无数据；页面显示“—”。教师 trend=[]，不泄露全校建档数据。</p>
+<p>Report 字段：id（学生 ID）、studentNo、name、className、courseId、courseName、recorded（非 null 成绩数）、expected（区间内考试数）、averageScore（加权均分，可 null）、attendanceTotal、attendancePresent、attendanceRate（可 null）。from/to 分别约束考试日期和点名日期，含边界；不填为 1000-01-01 至 9999-12-31。结束早于开始返回 400。多次考试权重和考勤分母见需求文档。</p>
+<p>Audit 元素：id、operatorId、operator（显示名称可空）、action、targetType、targetId、beforeData、afterData、result、message、createTime。beforeData/afterData 是 JSON 摘要文本；不提供密码、JWT 或完整学生请求。search 模糊匹配动作如 PUT_GRADES；pageSize 1–200。</p>
+<p>Portal={student,courses,enrolledIds,grades,attendance}。courses 为目录，enrolledIds 为本人课程 ID；grades 仅本人，额外含 examName、examDate、weight、courseName；attendance 仅本人，含 courseId、courseName、date、status。不接受 studentId 查询参数扩大访问范围。</p>
+<h2 id="api-11-v1-客户端迁移注意">11. V1 客户端迁移注意</h2>
+<ol>
+<li>请求增加 Bearer JWT；401 清理登录，403 显示权限错误。</li>
+<li>更新资料、成绩及点名提交 version；点名首次为 -1。</li>
+<li>班级来自 /classes；不再固定枚举。新增学生不自动选课。</li>
+<li>成绩增加 examId；同课程学生允许存在多次考试，唯一键改为 exam_id+student_id。</li>
+<li>Grades/Attendance 先加载真实课程，不能请求演示 ID c1。</li>
+<li>当前正式入口为 src/v2；旧 App/pages/lib/api/seed 保留作学习对照，未被 main.tsx 使用，不是 V2 运行链路。</li>
+</ol></article>
+<article class="document" id="document-database" data-doc="database" hidden><h1 id="database-学序数据库脚本">学序数据库脚本</h1>
+<p>公开仓库不包含本机数据库；请按根 README 创建空库，演示数据按 docs/演示数据.md 自行初始化。</p>
+<h2 id="database-v2-当前运行方式优先阅读">V2 当前运行方式（优先阅读）</h2>
+<p>当前版本由 Flyway 自动管理结构：<code>backend/src/main/resources/db/migration/V1__workspace_baseline.sql</code> 创建 V1 八张表，<code>V2__academic_workspace.sql</code> 新增班级、选课、考试和 version / 学生身份 / 令牌撤销字段，最终为 11 张业务表，加 flyway_schema_history。<strong>旧的独立 SQL 001、002、003 已于 2026-10-24 精简移除；当前结构以这两条 Flyway 迁移为准。</strong></p>
+<p>空库只需要先执行：</p>
+<pre><code class="language-sql">CREATE DATABASE IF NOT EXISTS xuexu CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+</code></pre>
+<p>配置环境变量后启动 Java，由 Flyway 顺序迁移；首次管理员由 ADMIN_PASSWORD 初始化。旧非空库使用 baseline 0；已有学生、主键和 V1 成绩/点名会保留，迁入新的关联模型。不要对已经由 Flyway 升级的库手动重复执行 V2 ALTER，也不要修改已经在共享环境执行过的历史迁移。</p>
+<p>V2 新表和关键约束：class.name 唯一；enrollment(course_id,student_id) 联合主键；exam(course_id,name) 唯一；grade 唯一键改为 (exam_id,student_id)；user.student_id 唯一且可空。数据库仍没有 FOREIGN KEY；存在性校验、引用保护、选退课、关联删除和事务在 Service 完成。容量采用课程行锁和 READ COMMITTED；资料、成绩和点名的陈旧版本返回 409。</p>
+<h3 id="database-升级前备份及恢复">升级前备份及恢复</h3>
+<p>使用 MySQL 客户端原生结果文件，避免 PowerShell 旧版本重定向将 SQL 写成 UTF-16。先创建 runtime 目录，再执行（-p 交互输入密码，不把密码写进命令）：</p>
+<pre><code class="language-powershell">New-Item -ItemType Directory -Path runtime -Force
+mysqldump -u root -p --single-transaction --set-gtid-purged=OFF --no-tablespaces --result-file=runtime/xuexu-before-v2.sql xuexu
+</code></pre>
+<p>先恢复到另一个测试库检查，而非覆盖现有业务库：</p>
+<pre><code class="language-sql">CREATE DATABASE xuexu_restore CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE xuexu_restore;
+SOURCE runtime/xuexu-before-v2.sql;
+SHOW TABLES;
+SELECT COUNT(*) FROM eduflow_student;
+</code></pre>
+<p>mysqldump 不加 --databases 时不会写入固定 USE，适合上述独立恢复。MySQL DDL 不保证迁移脚本整段回滚；迁移失败时保存日志并依据升级前备份恢复，不能为了通过校验就删除 Flyway 历史或随意 repair。</p>
+<p>本轮隔离验证：旧 001+002 学生单表库升级后仍保留两条原学生及 ID、version=0；V1/V2 迁移记录成功，外键数量 0。新空库也成功迁到 V2。详细记录见 <code>docs/验收记录.md</code>。</p>
+<h2 id="database-保留哪些文件">保留哪些文件</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>文件</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>backend/src/main/resources/db/migration/V1__workspace_baseline.sql</td>
+<td>初始 8 张业务表；是当前迁移链的一部分，必须保留。</td>
+</tr>
+<tr>
+<td>backend/src/main/resources/db/migration/V2__academic_workspace.sql</td>
+<td>班级、独立选课、多次考试、版本和学生身份的升级，必须保留。</td>
+</tr>
+<tr>
+<td>sql/004_demo_data_checks.sql</td>
+<td>常用展示库的只读统计和孤立关联核对。</td>
+</tr>
+</tbody>
+</table></div>
+<p>旧 SQL 和旧 V1 文档已移除，迁移注释及历史验收报告中的原始脚本名称仍保留用于追溯，不构成启动依赖。不要修改已执行迁移的内容或校验和。</p>
+<h2 id="database-当前-11-张业务表">当前 11 张业务表</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>表</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>eduflow_student</td>
+<td>学生档案。</td>
+</tr>
+<tr>
+<td>eduflow_class</td>
+<td>班级与专业。</td>
+</tr>
+<tr>
+<td>eduflow_course</td>
+<td>课程、时间与容量。</td>
+</tr>
+<tr>
+<td>eduflow_enrollment</td>
+<td>独立学生选课关系。</td>
+</tr>
+<tr>
+<td>eduflow_exam</td>
+<td>每门课的多次考试与权重。</td>
+</tr>
+<tr>
+<td>eduflow_grade</td>
+<td>每名学生每次考试的成绩；NULL 是未录入，0 是有效成绩。</td>
+</tr>
+<tr>
+<td>eduflow_attendance_sheet</td>
+<td>每课程每日一张已保存点名表。</td>
+</tr>
+<tr>
+<td>eduflow_attendance_record</td>
+<td>点名表内每个学生的状态。</td>
+</tr>
+<tr>
+<td>eduflow_user</td>
+<td>登录账户、角色、学生绑定及令牌版本。</td>
+</tr>
+<tr>
+<td>eduflow_user_course</td>
+<td>教师课程授权。</td>
+</tr>
+<tr>
+<td>eduflow_operation_log</td>
+<td>业务审计。</td>
+</tr>
+</tbody>
+</table></div>
+<p>另有 flyway_schema_history 记录迁移版本。存在性、引用保护、授权和批量事务由 Java Service 实现；数据库仍保留唯一索引和 CHECK 等约束。</p>
+<h2 id="database-只读核对">只读核对</h2>
+<p>在 IDEA/MySQL 控制台打开并执行 <a href="../sql/004_demo_data_checks.sql">004_demo_data_checks.sql</a>。它明确 USE xuexu，用于常用展示库；检查隔离测试库时应选择正确的数据库，不要直接照搬这个 USE。</p>
+<pre><code class="language-sql">USE xuexu;
+SHOW TABLES;
+SELECT installed_rank, version, description, success
+FROM flyway_schema_history ORDER BY installed_rank;
+SELECT COUNT(*) AS foreign_key_count
+FROM information_schema.TABLE_CONSTRAINTS
+WHERE CONSTRAINT_SCHEMA = 'xuexu' AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+</code></pre>
+<p>预期为 11 张业务表及迁移历史，V1/V2 成功，外键数为 0。15 名学生等数量是演示资料导入时的历史基线，正常编辑后可以变化。业务数据实际保存在 MySQL；runtime/local.env 是本机配置，runtime/backups 和 runtime/demo-before.json 是恢复资料与备份指纹，均继续保留且不提交到公开仓库。</p>
+<p>启动见<a href="#startup">根 README</a>，展示场景见<a href="#demo">演示数据</a>，自动检查及手工功能清单见<a href="#verification">验收记录</a>。</p>
+<h2 id="database-展示数据核对-sql只读">展示数据核对 SQL（只读）</h2>
+<p>以下附录直接由核对脚本生成，阅读页面不会执行 SQL。脚本选择常用 xuexu 库，检查测试库时应使用对应连接。</p>
+<pre><code class="language-sql">-- Read-only checks for the V2 showcase data. Execute on the normal 3306/xuexu database.
+USE xuexu;
+
+SELECT '学生' AS 数据, COUNT(*) AS 数量 FROM eduflow_student
+UNION ALL SELECT '班级', COUNT(*) FROM eduflow_class
+UNION ALL SELECT '课程', COUNT(*) FROM eduflow_course
+UNION ALL SELECT '选课', COUNT(*) FROM eduflow_enrollment
+UNION ALL SELECT '考试', COUNT(*) FROM eduflow_exam
+UNION ALL SELECT '成绩（含未录入）', COUNT(*) FROM eduflow_grade
+UNION ALL SELECT '已录入成绩', COUNT(*) FROM eduflow_grade WHERE score IS NOT NULL
+UNION ALL SELECT '考勤表', COUNT(*) FROM eduflow_attendance_sheet
+UNION ALL SELECT '考勤明细', COUNT(*) FROM eduflow_attendance_record;
+
+SELECT student_no, name, class_name, status
+FROM eduflow_student WHERE student_no LIKE 'DEMO26%' ORDER BY student_no;
+
+SELECT c.code, c.name, c.capacity, COUNT(e.student_id) AS enrolled
+FROM eduflow_course c LEFT JOIN eduflow_enrollment e ON e.course_id = c.id
+GROUP BY c.id ORDER BY c.code;
+
+SELECT status, COUNT(*) AS count FROM eduflow_attendance_record GROUP BY status;
+
+SELECT COUNT(*) AS orphan_enrollments
+FROM eduflow_enrollment e
+LEFT JOIN eduflow_student s ON s.id = e.student_id
+LEFT JOIN eduflow_course c ON c.id = e.course_id
+WHERE s.id IS NULL OR c.id IS NULL;
+
+SELECT COUNT(*) AS orphan_grades
+FROM eduflow_grade g
+LEFT JOIN eduflow_student s ON s.id = g.student_id
+LEFT JOIN eduflow_exam x ON x.id = g.exam_id
+WHERE s.id IS NULL OR x.id IS NULL OR x.course_id &lt;&gt; g.course_id;
+
+SELECT COUNT(*) AS orphan_attendance
+FROM eduflow_attendance_record r
+LEFT JOIN eduflow_student s ON s.id = r.student_id
+LEFT JOIN eduflow_attendance_sheet a ON a.id = r.sheet_id
+WHERE s.id IS NULL OR a.id IS NULL;
+</code></pre></article>
+<article class="document" id="document-verification" data-doc="verification" hidden><h1 id="verification-验证记录">验证记录</h1>
+<h2 id="verification-2026年10月31日发布前重新检查">2026年10月31日发布前重新检查</h2>
+<p>Windows / JDK 21：后端 Maven package 成功，22 项 JUnit/MockMvc 等测试，0 失败、0 错误、0 跳过；前端 10 项领域测试通过；TypeScript/Vite production build 成功。详见<a href="verification/release-checks-20261031.json">机器可读记录</a>。这些测试不等于全系统覆盖率。</p>
+<h2 id="verification-历史真实-http-与-mysql-验收">历史真实 HTTP 与 MySQL 验收</h2>
+<p>2026-10-23 在隔离 MySQL 8.0.34 完成 13 组检查，保留<a href="verification/http-acceptance.json">原始 JSON</a>及原日期。本次发布未重跑该集成验收，未进行 100 并发压测。历史检查内容：</p>
+<ol>
+<li>JWT authentication, malformed token and bad password rejected</li>
+<li>Student validation, case-insensitive uniqueness and MySQL pagination</li>
+<li>Class rename updates students atomically; stale and occupied deletion rejected</li>
+<li>CSV BOM and quoted comma accepted; malformed row and duplicate leave no partial insert</li>
+<li>Explicit enrollment rolls back invalid batches; concurrent final seat cannot oversubscribe</li>
+<li>Teacher course scopes enforced in directory, grades, reports and administration</li>
+<li>Multiple exams, null/zero, weighted report, decimal validation and stale batch rollback</li>
+<li>Attendance first-save race, complete roster validation and historical roster preservation</li>
+<li>Student portal is self-scoped; self enrollment and protected withdrawal work</li>
+<li>Date-filtered report and dashboard use real scoped denominators</li>
+<li>Batch deletion is atomic, cascades grades/attendance and revokes bound student login</li>
+<li>Authorization revocation, password changes and logout invalidate existing access</li>
+<li>Success and rolled-back failure audits persist without password/token disclosure</li>
+</ol>
+<h2 id="verification-重新执行集成验收">重新执行集成验收</h2>
+<ol>
+<li>创建独立空测试库（例如 xuexu_acceptance）及仅授权该库的账号。</li>
+<li>设置 DB_URL、DB_USERNAME、DB_PASSWORD、随机 JWT_SECRET、随机 ADMIN_PASSWORD、PORT=8086；不要复用常用库。启动 <code>java -jar backend/target/xuexu-backend-2.0.0.jar</code>。</li>
+<li>等待 http://127.0.0.1:8086/health 返回 UP；在另一个终端设置同一管理员密码为 V2_TEST_PASSWORD，同一 JWT 密钥为 V2_TEST_JWT_SECRET。</li>
+<li>执行 <code>python tools/verify_v2.py --base http://127.0.0.1:8086</code>。脚本会写入虚构测试资料，包含删除、改密及并发；不自动清理全部资料。</li>
+<li>预期 13 组通过、退出码 0，runtime/acceptance.json 中 passed=true。随后在隔离前端核对三类角色、实际保存与重启后的持久化。</li>
+</ol>
+<h2 id="verification-边界">边界</h2>
+<p>最后一个名额两请求竞争属于功能一致性验证，不是吞吐或容量指标。教师已授权/未授权课程、学生本人/他人、管理员接口拒绝、撤权及退出后的旧令牌是验收场景；未给出权限测试覆盖率百分比。Docker/Compose 尚未在本机验证，公网部署未完成。</p></article>
+<article class="document" id="document-demo" data-doc="demo" hidden><h1 id="demo-虚构演示数据">虚构演示数据</h1>
+<p>公开仓库不附带开发者本机数据库或用户记录。首次启动仅建立表结构和管理员账户；可手动创建班级、学生、课程，或在专用演示库运行种子脚本。</p>
+<p>设置 ADMIN_PASSWORD（或 V2_TEST_PASSWORD）和 DEMO_PASSWORD 后执行 <code>python tools/seed_demo.py --base http://127.0.0.1:8081</code>。脚本通过真实 API 添加虚构学生、课程、考试、成绩和考勤，并建立教师、学生演示账户；请先备份目标库。不得把仓库中不存在的固定人数当成新环境的验收结果。</p></article>
+<article class="document" id="document-plan" data-doc="plan" hidden><h1 id="plan-学序-tlias-学习与交付规划">学序 × Tlias 学习与交付规划</h1>
+<p>版本：1.0 · 整理日期：2026-10-23。</p>
+<blockquote>
+<p>学习基线仍是本人自述的 P83。2026-10-23 已按后续请求补建 V2 实现，软件状态以新版需求、接口和项目介绍为准；本文原有“当前项目基线”及阶段勾选保留为当时的学习路线，不作为现在的功能缺失清单，也不替你认定已掌握。</p>
+</blockquote>
+<h2 id="plan-v2-交付后的学习使用方式">V2 交付后的学习使用方式</h2>
+<p>正式前端入口现为 <code>src/v2/WorkspaceApp.tsx</code>：People（学生/班级）、Curriculum（课程/选课）、Assessment（考试/成绩/考勤）、Insights（工作台/报表/学生门户/审计）、Accounts（账户/改密）、client（真实 HTTP 与登录）、shared（表单/表格/异步状态），workspace.css 为界面样式。main.tsx 已切换该入口；原 App/pages/mock 代码保留作对照，不再参与 V2 页面运行。</p>
+<p>继续按下方集数优先级学习，每学完一个主题就在 V2 代码中完成一次独立修改与验证。例如：分页 → StudentMapper；事务 → saveGrades/importCsv；登录 → SecurityConfig/AuthService；统计 → WorkspaceSql.REPORT；并发 → enroll 的行锁、READ COMMITTED 和 version。不要把 AI 已实现的功能直接等同于自己的学习进度。</p>
+<p>投简历前至少独立演示“建档 → 开课 → 授权 → 选课 → 录分 → 点名 → 报表”，能解释一次失败为何回滚，并能手写或修改学生 CRUD、SQL 分页和一条事务规则。项目介绍已提供基于实际实现的简历表述，避免使用未经压测的并发/性能数字。</p>
+<p>相关文档：<a href="#requirements">需求与验收</a> · <a href="#api">接口与请求示例</a> · <a href="#guide">文档中心</a>。</p>
+<h2 id="plan-1-主路线与学习方法">1. 主路线与学习方法</h2>
+<p>继续使用 Java / Spring Boot / MyBatis / MySQL，沿用当前 React 前端。学习主线保持 <code>Controller → Service → Mapper → MySQL</code>。</p>
+<p>顺序：学生管理完善 → 课程管理 → 成绩保存与事务 → 登录和权限 → 成绩统计 → 导入 → 部署。考勤和工作台完整化在起投版本之后继续做。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>学习方式</th>
+<th>具体做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>精看</td>
+<td>理解问题和原理；暂停视频自己写；在学序实现同类功能；验证正常及失败路径。</td>
+</tr>
+<tr>
+<td>快看</td>
+<td>可以倍速；找与已会内容的差异；第一次出现的新知识要暂停研究。</td>
+</tr>
+<tr>
+<td>暂缓</td>
+<td>当前先放下，完成核心业务后按需要补回，不等于永久不学。</td>
+</tr>
+</tbody>
+</table></div>
+<p>先看一个知识点，再落地一个小功能。把更多时间留给编码、SQL、调试和验证；视频已看、AI 已生成、构建通过分别只能证明对应的一小部分。</p>
+<p>AI 可解释概念、给提示、审查代码和定位错误。关键业务先自己尝试；完成后至少能够独立改一条规则，并解释数据为什么这样变化。</p>
+<h2 id="plan-2-当前项目基线">2. 当前项目基线</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>内容</th>
+<th>当前源码状态</th>
+<th>下一步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>学生列表、新增、修改</td>
+<td>前端已接 Java 接口</td>
+<td>自己追踪请求与数据变化。</td>
+</tr>
+<tr>
+<td>学生详情、单人删除</td>
+<td>Java 已有；当前页面未直接调用这两条接口</td>
+<td>用 API 客户端单独练习。</td>
+</tr>
+<tr>
+<td>条件筛选、分页</td>
+<td>Java 查询全部后遍历筛选、截取</td>
+<td>P94–98 改成数据库条件分页。</td>
+</tr>
+<tr>
+<td>校验、查重、异常响应</td>
+<td>Service 校验和 Controller 局部异常处理已存在</td>
+<td>理解规则，P115 抽为全局处理器。</td>
+</tr>
+<tr>
+<td>日志</td>
+<td>有 Logback 配置、控制器日志、LogTest</td>
+<td>学会全局 INFO、业务包 DEBUG/TRACE；保留有用信息。</td>
+</tr>
+<tr>
+<td>课程、成绩、考勤、工作台</td>
+<td>页面与 mock 已存在，真实 Java 接口待开发</td>
+<td>按需求文档逐模块接入。</td>
+</tr>
+<tr>
+<td>导入、批量删除</td>
+<td>页面入口和契约已存在，后端待开发</td>
+<td>P100–103、P110–111 迁移批量与事务。</td>
+</tr>
+<tr>
+<td>登录与权限</td>
+<td>界面“管理员”只是展示，无真实认证</td>
+<td>P120–132 后完成后端认证与权限。</td>
+</tr>
+</tbody>
+</table></div>
+<p>当前学生接口共五条：<code>GET /students</code>、<code>GET /students/{id}</code>、<code>POST /students</code>、<code>PUT /students/{id}</code>、<code>DELETE /students/{id}</code>。浏览器开发环境请求前缀为 <code>/api</code>。</p>
+<h2 id="plan-3-先用-p83-做一次独立检查">3. 先用 P83 做一次独立检查</h2>
+<ul>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 从浏览器 Network 找到一次修改请求，指出 method、URL、路径 ID 和 JSON 请求体。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 沿 Controller、Service、Mapper 找到实际执行的 UPDATE。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 解释 WHERE 条件怎样限定目标；路径 ID 为什么优先于 body.id。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 保持自己的学号可以保存，改成其他人的学号应返回冲突。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 修改不存在的 ID、非法输入分别得到明确错误，失败时数据未被改动。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 在测试数据上修改并直接查询 MySQL，确认实际结果；练习后清理临时数据。</li>
+</ul>
+<p>若讲不清，定点回看 P77–83 对应内容；无需重新从课程第一集开始。检查通过后继续 P84。</p>
+<h2 id="plan-4-p84132-的观看优先级">4. P84–132 的观看优先级</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>集数与原课主题</th>
+<th>建议</th>
+<th>在学序的具体产出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P84–85 日志技术：Logback 入门、配置文件、日志级别</td>
+<td>精看基础</td>
+<td>能用日志定位一次失败，业务包开 DEBUG；避免全局 ALL 持续输出框架细节。</td>
+</tr>
+<tr>
+<td>P86–88 多表关系与设计案例</td>
+<td>精看</td>
+<td>画清学生、课程、成绩的关系；理解主键、关联字段、唯一约束。</td>
+</tr>
+<tr>
+<td>P89–92 多表查询：概述、内外连接、子查询、案例</td>
+<td>精看</td>
+<td>自己查询课程学生及成绩，解释 LEFT JOIN、NULL、重复行；不追求复杂嵌套技巧。</td>
+</tr>
+<tr>
+<td>P93 员工管理-准备工作</td>
+<td>快看</td>
+<td>学字段与接口分析，沿用当前工程。</td>
+</tr>
+<tr>
+<td>P94–95 分页查询-原理分析、代码实现</td>
+<td>重点精看</td>
+<td>手写 COUNT、LIMIT 和 offset，使用稳定排序。</td>
+</tr>
+<tr>
+<td>P96 分页查询-PageHelper 分页插件</td>
+<td>理解用法后按需实践</td>
+<td>先会手写分页；选插件前核对与当前 Boot/MyBatis 的兼容性，不叠加多套分页。</td>
+</tr>
+<tr>
+<td>P97–98 条件分页查询-基本实现、程序优化</td>
+<td>重点精看</td>
+<td>学生 search/className/status 在 SQL 中组合；列表与 total 使用相同条件。</td>
+</tr>
+<tr>
+<td>P99 新增员工-保存员工基本信息</td>
+<td>快看，卡住再精看</td>
+<td>独立实现新增课程，验证能否把已有 CRUD 迁移过去。</td>
+</tr>
+<tr>
+<td>P100 新增员工-批量保存员工工作经历</td>
+<td>精看</td>
+<td>学集合、关联数据和批量插入，迁移到课程成绩初始化/保存。</td>
+</tr>
+<tr>
+<td>P101–103 事务管理</td>
+<td>重点精看</td>
+<td>在 Service 划定事务；模拟中途失败，并核对真实数据库回滚。</td>
+</tr>
+<tr>
+<td>P104–105 文件上传介绍、本地存储</td>
+<td>做上传时精看，可后移</td>
+<td>理解 multipart。当前学生 CSV 契约是 JSON 字符串，不直接换成文件上传接口。</td>
+</tr>
+<tr>
+<td>P106–108 阿里云 OSS</td>
+<td>暂缓</td>
+<td>首版核心流程暂不依赖云端图片。</td>
+</tr>
+<tr>
+<td>P109 程序优化：@Value、@ConfigurationProperties</td>
+<td>精看配置思想</td>
+<td>把可变参数配置化，数据库密码使用环境变量。</td>
+</tr>
+<tr>
+<td>P110–111 删除员工-参数接收、逻辑实现</td>
+<td>精看新增部分</td>
+<td>批量 ID 校验、关联数据、事务；按需求文档明确删除后果。</td>
+</tr>
+<tr>
+<td>P112–113 修改员工-查询回显、修改数据</td>
+<td>单表快看，多表精看</td>
+<td>看关联集合的回显/修改及事务，复用已有单表基础。</td>
+</tr>
+<tr>
+<td>P114 程序优化-动态更新</td>
+<td>精看</td>
+<td>区分未传、空字符串、null；保留当前 PUT 完整更新语义。</td>
+</tr>
+<tr>
+<td>P115 全局异常处理器</td>
+<td>精看，建议提前至分页后</td>
+<td>统一参数错误、404、409 和未知异常的响应。</td>
+</tr>
+<tr>
+<td>P116–118 员工信息统计</td>
+<td>后端精看，图表快看</td>
+<td>迁移平均分、及格率、分数分布，以人工小样本核对分母和 NULL。</td>
+</tr>
+<tr>
+<td>P119 项目实战-需求说明</td>
+<td>快看需求后独立练习</td>
+<td>选一个小模块先做，再对照课程检查。</td>
+</tr>
+<tr>
+<td>P120–124 登录功能、Cookie、Session、令牌方案</td>
+<td>重点精看</td>
+<td>画清登录和后续请求怎样识别身份。</td>
+</tr>
+<tr>
+<td>P125–126 JWT 生成校验、下发令牌</td>
+<td>重点精看</td>
+<td>验证错误密码、篡改和过期；不得信任未校验的身份字段。</td>
+</tr>
+<tr>
+<td>P127–129 Filter</td>
+<td>精看</td>
+<td>理解过滤范围、放行与失败出口。</td>
+</tr>
+<tr>
+<td>P130–132 Interceptor</td>
+<td>精看</td>
+<td>理解与 Filter 的位置和职责；项目只保留一套正式认证入口。</td>
+</tr>
+</tbody>
+</table></div>
+<p>员工管理虽然重复出现增删改查，但第一次出现的批量操作、多表关系、关联集合和事务不能一并略过。</p>
+<h2 id="plan-5-p133200-的安排">5. P133–200 的安排</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>集数与主题</th>
+<th>当前安排</th>
+<th>补回时机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P133–134 AOP 入门、核心概念</td>
+<td>基础看懂，做一个耗时记录例子</td>
+<td>登录之后。</td>
+</tr>
+<tr>
+<td>P135–140 AOP 进阶、操作日志、获取登录员工</td>
+<td>先快看，日志案例后续精看</td>
+<td>成绩修改与登录完成后；先可在 Service 直接记录审计。</td>
+</tr>
+<tr>
+<td>P141–144 配置优先级、Bean、起步依赖、自动配置</td>
+<td>理解基本思想，结合自己的工程找例子</td>
+<td>不阻塞核心业务，之后复习解释。</td>
+</tr>
+<tr>
+<td>P145–147 自动配置源码、自定义 starter</td>
+<td>暂缓</td>
+<td>首版完成之后。</td>
+</tr>
+<tr>
+<td>P148–151 Maven 分模块、继承、聚合、私服</td>
+<td>暂缓</td>
+<td>当前保持一个后端 Maven 模块。</td>
+</tr>
+<tr>
+<td>P152 Web后端开发-总结</td>
+<td>看</td>
+<td>用自己的项目复述一次请求到数据库的流程。</td>
+</tr>
+<tr>
+<td>P153–176 Vue、Element Plus、Tlias 前端开发</td>
+<td>当前跳过，按需查阅</td>
+<td>学序已有 React 前端；需要理解交互时参考。</td>
+</tr>
+<tr>
+<td>P177–180 前端登录、令牌、401、退出</td>
+<td>看交互流程，迁移到 React</td>
+<td>后端认证接入时。</td>
+</tr>
+<tr>
+<td>P181 Tlias案例-打包部署</td>
+<td>看构建和产物概念</td>
+<td>前端生产构建时。</td>
+</tr>
+<tr>
+<td>P182 Linux 介绍与安装</td>
+<td>快看，已有环境可略过安装</td>
+<td>部署阶段。</td>
+</tr>
+<tr>
+<td>P183–186 Linux 连接、目录、文件、文本与查找</td>
+<td>部署时精看并操作</td>
+<td>自己定位一次配置和错误日志。</td>
+</tr>
+<tr>
+<td>P187–188 JDK、MySQL 安装与防火墙</td>
+<td>按所选部署方式看</td>
+<td>容器部署可避免重复手动安装。</td>
+</tr>
+<tr>
+<td>P189–190 Nginx 与项目部署</td>
+<td>精看并部署</td>
+<td>验证静态前端 → Java → MySQL。</td>
+</tr>
+<tr>
+<td>P191–199 Docker、数据卷、镜像、网络、Compose</td>
+<td>部署阶段精看</td>
+<td>核心闭环完成后；验证重启和数据保留。</td>
+</tr>
+<tr>
+<td>P200 Web开发-完结</td>
+<td>看总结即可</td>
+<td>无需把看完此集当作投递前提。</td>
+</tr>
+</tbody>
+</table></div>
+<p>当前 Boot/MyBatis 版本以项目 <code>pom.xml</code> 为准。迁移课程思路，不整段覆盖依赖版本；Boot 已管理的日志组件优先交给它统一管理。</p>
+<h2 id="plan-6-按产出推进的阶段清单">6. 按产出推进的阶段清单</h2>
+<h3 id="plan-s1基础-crud-与日志">S1：基础 CRUD 与日志</h3>
+<ul>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 完成第 3 节的 P83 独立检查。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 读懂 Logback 的 appender、root 和 logger；能说明为什么全局 ALL 会刷屏。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 记录一次正常操作和一次失败，能从日志找到目标接口。</li>
+</ul>
+<h3 id="plan-s2数据库条件分页下一项主要功能">S2：数据库条件分页（下一项主要功能）</h3>
+<ul>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 为 <code>StudentMapper</code> 增加条件查询与总数查询。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> Service 不再先 <code>findAll()</code> 再遍历全表完成分页。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 验证第一页、第二页、空结果、末页、非法 page/pageSize，以及组合条件。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> total 和列表使用同一组筛选条件，固定排序并用 ID 兜底。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 接口响应仍为 <code>{items,total,page,pageSize}</code>，现有前端正常翻页。</li>
+</ul>
+<h3 id="plan-s3课程成绩与事务">S3：课程、成绩与事务</h3>
+<ul>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 按需求文档实现课程列表、新增、修改，不增加当前没有页面的课程删除功能。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 实现课程成绩查询、批量保存，分清 0 分和未录入。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 成绩/考勤页先加载真实课程再选择 ID；移除对演示课程 <code>c1</code> 的启动依赖，处理无课程空状态。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 保证同一课程同一学生只有一条成绩记录。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 事务中途失败时数据库没有部分成功；重复提交不生成重复记录。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 把局部异常处理整理为全局处理，保持 HTTP 与 JSON 契约。</li>
+</ul>
+<h3 id="plan-s4登录权限与起投版本">S4：登录、权限与起投版本</h3>
+<ul>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 接入真实登录、密码哈希、令牌校验和退出交互。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 管理员/教师的操作范围由后端检查；教师跨课程操作被拒绝。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 使用 JUnit/MockMvc 验证正常和失败路径；另用真实测试库验证事务和唯一约束。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 做完最小统计：均值、及格率、成绩分布；不填虚构历史数据。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> README、建表/初始化脚本、接口示例、截图或短演示可供他人复现。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 能独立讲解和修改关键业务。</li>
+</ul>
+<p>Spring Security、密码哈希和对象级权限属于课外补充；P132 是主题里程碑，不代表课程已替你实现这些能力。认证设计见接口文档第 7 节。</p>
+<h3 id="plan-s5完整化与部署">S5：完整化与部署</h3>
+<ul>
+<li class="task"><span class="todo" aria-hidden="true">□</span> CSV 导入：固定模板、行数/大小上限、全量校验、失败整批不写入。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 批量删除：按明确的关联删除规则执行，全批次失败不产生部分删除。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 完成考勤和真实工作台，处理未保存状态与空数据。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 完成部署、反向代理、日志定位和重启后数据保留验证。</li>
+<li class="task"><span class="todo" aria-hidden="true">□</span> 后续再补 AOP 审计、CI 与需要的工程增强。</li>
+</ul>
+<h2 id="plan-7-github-与简历节点">7. GitHub 与简历节点</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>节点</th>
+<th>门槛</th>
+<th>行动</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>现在：P83 学习版</td>
+<td>学生 CRUD 可复现，README 清楚区分已完成/待完成</td>
+<td>可以上传 GitHub，开始整理简历；不上传密码、Token、真实学生资料和运行产物。</td>
+</tr>
+<tr>
+<td>主要起投节点：P132 相关内容落地 + S3/S4</td>
+<td>课程成绩闭环、事务、认证权限、核心验证、可复现文档、能自己讲清</td>
+<td>开始小批量投匹配岗位，边投边补；不必等待所有页面完成。</td>
+</tr>
+<tr>
+<td>后续部署版：P190 或 P199 对应能力</td>
+<td>另一套环境能启动并完成演示，数据可持久保存</td>
+<td>更新仓库与简历，补部署证据和改进记录。</td>
+</tr>
+</tbody>
+</table></div>
+<p>这里是项目展示的学习里程碑，不是所有公司的统一录用标准。投递时另核对毕业时间、到岗和在岗时长等要求。Java、SQL、集合、HTTP 等基础与面试练习应同时进行。</p>
+<p>简历只写实际实现、亲自验证且能解释的内容。前端使用 AI 辅助可以据实说明，重点展示自己独立完成的接口、业务规则、联调、测试和问题定位。</p>
+<h2 id="plan-8-前端阅读顺序与文件速查">8. 前端阅读顺序与文件速查</h2>
+<p>先读 <code>types.ts → pages/Students.tsx → lib/api.ts → Java Controller</code>。保存学生流程是：表单 → POST/PUT → Controller → Service → Mapper → MySQL → 返回结果 → 刷新列表。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>文件（相对 frontend/）</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index.html</code></td>
+<td>网页外壳、标题、图标、React 挂载位置。</td>
+</tr>
+<tr>
+<td><code>src/main.tsx</code></td>
+<td>启动 React，加载 App 和样式。</td>
+</tr>
+<tr>
+<td><code>src/App.tsx</code></td>
+<td>总布局、导航、搜索、设置、通知、页面切换与错误兜底。</td>
+</tr>
+<tr>
+<td><code>src/styles.css</code></td>
+<td>颜色、排版、布局与响应式适配。</td>
+</tr>
+<tr>
+<td><code>src/pages/Students.tsx</code></td>
+<td>学生列表、表单、筛选、分页、导入导出和删除入口。</td>
+</tr>
+<tr>
+<td><code>src/pages/Courses.tsx</code></td>
+<td>课程卡片/列表、详情、新增和修改。</td>
+</tr>
+<tr>
+<td><code>src/pages/Grades.tsx</code></td>
+<td>成绩录入、保存、统计、导出。</td>
+</tr>
+<tr>
+<td><code>src/pages/Attendance.tsx</code></td>
+<td>按课程和日期点名、保存和导出。</td>
+</tr>
+<tr>
+<td><code>src/pages/Dashboard.tsx</code></td>
+<td>汇总卡片、趋势、课程安排等工作台信息。</td>
+</tr>
+<tr>
+<td><code>src/types.ts</code></td>
+<td>学生、课程、成绩、考勤等 TypeScript 数据结构。</td>
+</tr>
+<tr>
+<td><code>src/lib/api.ts</code></td>
+<td>HTTP 请求、响应/错误处理，以及独立 mock 适配器。</td>
+</tr>
+<tr>
+<td><code>src/lib/domain.ts</code></td>
+<td>校验、成绩等级、CSV 解析和导出工具。</td>
+</tr>
+<tr>
+<td><code>src/lib/hooks.ts</code></td>
+<td>加载/错误/重试，以及搜索防抖。</td>
+</tr>
+<tr>
+<td><code>src/lib/seed.ts</code></td>
+<td>虚构演示数据，不能当作真实数据库。</td>
+</tr>
+<tr>
+<td><code>src/components/ui.tsx</code></td>
+<td>按钮、弹窗、分页、提示、空数据等公共组件。</td>
+</tr>
+<tr>
+<td><code>src/components/charts.tsx</code></td>
+<td>趋势、迷你折线、环形图等公共图表。</td>
+</tr>
+<tr>
+<td><code>package.json</code></td>
+<td>依赖与 dev/build/test 命令。</td>
+</tr>
+<tr>
+<td><code>pnpm-lock.yaml</code></td>
+<td>锁定依赖版本。</td>
+</tr>
+<tr>
+<td><code>vite.config.ts</code></td>
+<td>React 插件、开发端口、/api 转发。</td>
+</tr>
+<tr>
+<td><code>tsconfig.json</code></td>
+<td>TypeScript 检查规则。</td>
+</tr>
+<tr>
+<td><code>src/vite-env.d.ts</code></td>
+<td>Vite 环境类型声明。</td>
+</tr>
+<tr>
+<td><code>tests/domain.test.ts</code></td>
+<td>CSV、字段校验与成绩等级等工具测试，不替代真实 HTTP/MySQL 验证。</td>
+</tr>
+<tr>
+<td><code>public/favicon.svg</code></td>
+<td>标签页图标。</td>
+</tr>
+<tr>
+<td><code>public/api.md</code>、<code>public/api-docs.html</code></td>
+<td>由 docs/接口文档.md 同步的接口阅读入口。</td>
+</tr>
+<tr>
+<td><code>public/project-docs.html</code>、<code>public/requirements.md</code>、<code>public/study-plan.md</code></td>
+<td>本次文档中心和下载副本，由构建脚本生成。</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>node_modules/</code>、构建产物与 <code>.openai/</code> 工具配置不作为当前业务学习重点。</p>
+<h2 id="plan-9-每个任务怎样算完成">9. 每个任务怎样算完成</h2>
+<pre><code class="language-text">日期：
+看了哪几集：
+本次要实现的需求 ID：
+自己写了什么：
+正常路径如何验证：
+失败路径如何验证：
+数据库结果：
+遇到的问题与原因：
+文件 / Git 提交：
+下一小步：
+</code></pre>
+<p>同一时间只做一个主要功能。需求 → 读对应课程 → 自己实现 → 正常/失败验证 → 检查数据库 → 解释数据流 → 记录提交。</p>
+<h2 id="plan-10-分集索引">10. 分集索引</h2>
+<p>下面按本机课程视频文件名核对标题与编号，链接指向同一套 B 站课程。只核对了分集元数据，没有逐分钟观看或替你勾选完成。建议和产出含义见第 4–6 节。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>集数</th>
+<th>原课标题</th>
+<th>建议</th>
+<th>对应产出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=84">P84</a></td>
+<td>日志技术-Logback入门程序</td>
+<td>精看基础</td>
+<td>S1 日志与独立检查</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=85">P85</a></td>
+<td>日志技术-Logback配置文件&amp;日志级别</td>
+<td>精看基础</td>
+<td>S1 日志与独立检查</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=86">P86</a></td>
+<td>多表关系-一对多</td>
+<td>精看</td>
+<td>S3 多表 SQL 练习</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=87">P87</a></td>
+<td>多表关系-一对一&amp;多对多</td>
+<td>精看</td>
+<td>S3 多表 SQL 练习</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=88">P88</a></td>
+<td>多表关系-多表设计案例</td>
+<td>精看</td>
+<td>S3 多表 SQL 练习</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=89">P89</a></td>
+<td>多表查询-概述</td>
+<td>精看</td>
+<td>S3 多表 SQL 练习</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=90">P90</a></td>
+<td>多表查询-内连接&amp;外连接</td>
+<td>精看</td>
+<td>S3 多表 SQL 练习</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=91">P91</a></td>
+<td>多表查询-子查询</td>
+<td>精看</td>
+<td>S3 多表 SQL 练习</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=92">P92</a></td>
+<td>多表查询-案例</td>
+<td>精看</td>
+<td>S3 多表 SQL 练习</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=93">P93</a></td>
+<td>员工管理-准备工作</td>
+<td>快看</td>
+<td>沿用当前工程</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=94">P94</a></td>
+<td>员工管理-分页查询-原理分析</td>
+<td>重点精看</td>
+<td>S2 数据库条件分页</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=95">P95</a></td>
+<td>员工管理-分页查询-代码实现</td>
+<td>重点精看</td>
+<td>S2 数据库条件分页</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=96">P96</a></td>
+<td>员工管理-分页查询-PageHelper分页插件</td>
+<td>理解后按需实操</td>
+<td>S2 先会手写分页</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=97">P97</a></td>
+<td>员工管理-条件分页查询-基本实现</td>
+<td>重点精看</td>
+<td>S2 数据库条件分页</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=98">P98</a></td>
+<td>员工管理-条件分页查询-程序优化</td>
+<td>重点精看</td>
+<td>S2 数据库条件分页</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=99">P99</a></td>
+<td>员工管理-新增员工-保存员工基本信息</td>
+<td>快看/按需精看</td>
+<td>S3 新增课程</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=100">P100</a></td>
+<td>员工管理-新增员工-批量保存员工工作经历</td>
+<td>重点精看</td>
+<td>S3 批量与事务</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=101">P101</a></td>
+<td>事务管理-介绍与操作</td>
+<td>重点精看</td>
+<td>S3 批量与事务</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=102">P102</a></td>
+<td>事务管理-Spring事务管理-介绍</td>
+<td>重点精看</td>
+<td>S3 批量与事务</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=103">P103</a></td>
+<td>事务管理-Spring事务管理-进阶&amp;事务四大特性</td>
+<td>重点精看</td>
+<td>S3 批量与事务</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=104">P104</a></td>
+<td>文件上传-介绍</td>
+<td>需要上传时精看</td>
+<td>S5 当前 CSV 为 JSON</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=105">P105</a></td>
+<td>文件上传-本地存储</td>
+<td>需要上传时精看</td>
+<td>S5 当前 CSV 为 JSON</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=106">P106</a></td>
+<td>文件上传-阿里云OSS-准备工作</td>
+<td>暂缓</td>
+<td>OSS 不阻塞首版</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=107">P107</a></td>
+<td>文件上传-阿里云OSS-入门程序</td>
+<td>暂缓</td>
+<td>OSS 不阻塞首版</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=108">P108</a></td>
+<td>文件上传-阿里云OSS-案例集成</td>
+<td>暂缓</td>
+<td>OSS 不阻塞首版</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=109">P109</a></td>
+<td>文件上传-阿里云OSS-程序优化(@Value&amp;@ConfigurationProperties)</td>
+<td>精看配置思想</td>
+<td>配置化练习</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=110">P110</a></td>
+<td>员工管理-删除员工-请求参数接收</td>
+<td>精看新增部分</td>
+<td>S5 批量删除</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=111">P111</a></td>
+<td>员工管理-删除员工-逻辑实现</td>
+<td>精看新增部分</td>
+<td>S5 批量删除</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=112">P112</a></td>
+<td>员工管理-修改员工-查询回显</td>
+<td>单表快看/多表精看</td>
+<td>S3 关联回显与修改</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=113">P113</a></td>
+<td>员工管理-修改员工-修改数据</td>
+<td>单表快看/多表精看</td>
+<td>S3 关联回显与修改</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=114">P114</a></td>
+<td>员工管理-修改员工-程序优化(动态更新)</td>
+<td>精看</td>
+<td>理解完整更新与空值</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=115">P115</a></td>
+<td>全局异常处理器</td>
+<td>精看，可提前</td>
+<td>S2 全局异常</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=116">P116</a></td>
+<td>员工信息统计-职位统计-分析</td>
+<td>后端精看/图表快看</td>
+<td>S4 成绩统计</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=117">P117</a></td>
+<td>员工信息统计-职位统计-实现</td>
+<td>后端精看/图表快看</td>
+<td>S4 成绩统计</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=118">P118</a></td>
+<td>员工信息统计-性别统计</td>
+<td>后端精看/图表快看</td>
+<td>S4 成绩统计</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=119">P119</a></td>
+<td>项目实战-需求说明</td>
+<td>快看后独立做</td>
+<td>需求迁移练习</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=120">P120</a></td>
+<td>登录认证-登录功能-实现</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=121">P121</a></td>
+<td>登录认证-登录校验-会话技术-介绍</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=122">P122</a></td>
+<td>登录认证-登录校验-会话技术-Cookie</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=123">P123</a></td>
+<td>登录认证-登录校验-会话技术-Session</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=124">P124</a></td>
+<td>登录认证-登录校验-会话技术-令牌方案</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=125">P125</a></td>
+<td>登录认证-登录校验-JWT-生成与校验</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=126">P126</a></td>
+<td>登录认证-登录校验-JWT-登录成功后下发令牌</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=127">P127</a></td>
+<td>登录认证-登录校验-Filter-入门</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=128">P128</a></td>
+<td>登录认证-登录校验-Filter-令牌校验Filter</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=129">P129</a></td>
+<td>登录认证-登录校验-Filter-详解</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=130">P130</a></td>
+<td>登录认证-登录校验-Interceptor-入门</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=131">P131</a></td>
+<td>登录认证-登录校验-Interceptor-令牌校验Interceptor</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=132">P132</a></td>
+<td>登录认证-登录校验-Interceptor-详解</td>
+<td>重点精看</td>
+<td>S4 认证与权限</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=133">P133</a></td>
+<td>SpringAOP-基础-AOP入门程序</td>
+<td>理解并做小例子</td>
+<td>AOP 基础</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=134">P134</a></td>
+<td>SpringAOP-基础-核心概念</td>
+<td>理解并做小例子</td>
+<td>AOP 基础</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=135">P135</a></td>
+<td>SpringAOP-进阶-通知类型</td>
+<td>先快看，案例后补</td>
+<td>S5 审计</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=136">P136</a></td>
+<td>SpringAOP-进阶-通知顺序</td>
+<td>先快看，案例后补</td>
+<td>S5 审计</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=137">P137</a></td>
+<td>SpringAOP-进阶-切入点表达式</td>
+<td>先快看，案例后补</td>
+<td>S5 审计</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=138">P138</a></td>
+<td>SpringAOP-进阶-连接点JoinPoint</td>
+<td>先快看，案例后补</td>
+<td>S5 审计</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=139">P139</a></td>
+<td>SpringAOP-案例-记录操作日志</td>
+<td>先快看，案例后补</td>
+<td>S5 审计</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=140">P140</a></td>
+<td>SpringAOP-案例-获取当前登录员工</td>
+<td>先快看，案例后补</td>
+<td>S5 审计</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=141">P141</a></td>
+<td>原理篇-SpringBoot配置优先级</td>
+<td>理解基础</td>
+<td>原理回顾</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=142">P142</a></td>
+<td>原理篇-Bean管理</td>
+<td>理解基础</td>
+<td>原理回顾</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=143">P143</a></td>
+<td>原理篇-SpringBoot原理-起步依赖原理</td>
+<td>理解基础</td>
+<td>原理回顾</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=144">P144</a></td>
+<td>原理篇-SpringBoot原理-自动配置-两种方案</td>
+<td>理解基础</td>
+<td>原理回顾</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=145">P145</a></td>
+<td>原理篇-SpringBoot原理-自动配置-源码跟踪</td>
+<td>暂缓</td>
+<td>首版之后补</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=146">P146</a></td>
+<td>原理篇-SpringBoot原理-自动配置-源码跟踪(@Conditional)</td>
+<td>暂缓</td>
+<td>首版之后补</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=147">P147</a></td>
+<td>原理篇-SpringBoot原理-自动配置-自定义starter</td>
+<td>暂缓</td>
+<td>首版之后补</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=148">P148</a></td>
+<td>Maven高级-分模块设计与开发</td>
+<td>暂缓</td>
+<td>首版之后补</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=149">P149</a></td>
+<td>Maven高级-继承</td>
+<td>暂缓</td>
+<td>首版之后补</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=150">P150</a></td>
+<td>Maven高级-聚合</td>
+<td>暂缓</td>
+<td>首版之后补</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=151">P151</a></td>
+<td>Maven高级-私服</td>
+<td>暂缓</td>
+<td>首版之后补</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=152">P152</a></td>
+<td>Web后端开发-总结</td>
+<td>看总结</td>
+<td>复述数据流</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=153">P153</a></td>
+<td>Vue工程化-介绍&amp;环境准备</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=154">P154</a></td>
+<td>Vue工程化-vue项目介绍&amp;开发流程</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=155">P155</a></td>
+<td>Vue工程化-API风格&amp;案例</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=156">P156</a></td>
+<td>ElementPlus-快速入门</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=157">P157</a></td>
+<td>ElementPlus-常见组件-表格组件&amp;分页组件</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=158">P158</a></td>
+<td>ElementPlus-常见组件-对话框组件&amp;表单组件</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=159">P159</a></td>
+<td>ElementPlus-案例</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=160">P160</a></td>
+<td>Tlias案例-准备工作</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=161">P161</a></td>
+<td>Tlias案例-整体布局-动态菜单(VueRouter)</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=162">P162</a></td>
+<td>Tlias案例-整体布局-动态菜单(VueRouter-嵌套路由)</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=163">P163</a></td>
+<td>Tlias案例-部门管理-列表查询</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=164">P164</a></td>
+<td>Tlias案例-部门管理-列表查询-程序优化</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=165">P165</a></td>
+<td>Tlias案例-部门管理-新增部门</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=166">P166</a></td>
+<td>Tlias案例-部门管理-修改&amp;删除部门</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=167">P167</a></td>
+<td>Tlias案例-员工管理-列表查询-页面布局(搜索栏)</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=168">P168</a></td>
+<td>Tlias案例-员工管理-列表查询-页面布局(搜索栏-watch侦听)</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=169">P169</a></td>
+<td>Tlias案例-员工管理-列表查询-页面布局(表格)</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=170">P170</a></td>
+<td>Tlias案例-员工管理-列表查询-页面交互</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=171">P171</a></td>
+<td>Tlias案例-员工管理-新增员工-页面布局(引入)</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=172">P172</a></td>
+<td>Tlias案例-员工管理-新增员工-页面布局(展示优化)</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=173">P173</a></td>
+<td>Tlias案例-员工管理-新增员工-页面交互(工作经历)</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=174">P174</a></td>
+<td>Tlias案例-员工管理-新增员工-页面交互(保存员工)</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=175">P175</a></td>
+<td>Tlias案例-员工管理-修改员工-修改数据</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=176">P176</a></td>
+<td>Tlias案例-员工管理-删除员工-批量删除</td>
+<td>当前跳过/按需查</td>
+<td>沿用 React</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=177">P177</a></td>
+<td>Tlias案例-登录-登录功能实现</td>
+<td>看流程，迁移 React</td>
+<td>S4 登录交互</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=178">P178</a></td>
+<td>Tlias案例-登录-携带令牌访问服务端</td>
+<td>看流程，迁移 React</td>
+<td>S4 登录交互</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=179">P179</a></td>
+<td>Tlias案例-登录-响应401跳转登录页面</td>
+<td>看流程，迁移 React</td>
+<td>S4 登录交互</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=180">P180</a></td>
+<td>Tlias案例-退出-功能实现</td>
+<td>看流程，迁移 React</td>
+<td>S4 登录交互</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=181">P181</a></td>
+<td>Tlias案例-打包部署</td>
+<td>构建时看</td>
+<td>S5 前端打包</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=182">P182</a></td>
+<td>Linux-概述-介绍&amp;系统安装</td>
+<td>快看/按需</td>
+<td>S5 部署准备</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=183">P183</a></td>
+<td>Linux-概述-远程连接&amp;目录结构</td>
+<td>部署时精看</td>
+<td>S5 Linux 操作</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=184">P184</a></td>
+<td>Linux-常用命令-目录&amp;文件操作命令</td>
+<td>部署时精看</td>
+<td>S5 Linux 操作</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=185">P185</a></td>
+<td>Linux-常用命令-拷贝移动&amp;打包压缩命令</td>
+<td>部署时精看</td>
+<td>S5 Linux 操作</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=186">P186</a></td>
+<td>Linux-常用命令-文本编辑&amp;查找命令</td>
+<td>部署时精看</td>
+<td>S5 Linux 操作</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=187">P187</a></td>
+<td>Linux-软件安装-JDK安装</td>
+<td>按部署方式看</td>
+<td>避免重复安装</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=188">P188</a></td>
+<td>Linux-软件安装-MySQL安装&amp;防火墙</td>
+<td>按部署方式看</td>
+<td>避免重复安装</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=189">P189</a></td>
+<td>Linux-软件安装-Nginx安装</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=190">P190</a></td>
+<td>Linux-项目部署</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=191">P191</a></td>
+<td>Docker-入门-MySQL安装</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=192">P192</a></td>
+<td>Docker-入门-命令解读</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=193">P193</a></td>
+<td>Docker-核心-常见命令</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=194">P194</a></td>
+<td>Docker-核心-数据卷挂载</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=195">P195</a></td>
+<td>Docker-核心-本地目录挂载</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=196">P196</a></td>
+<td>Docker-核心-自定义镜像</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=197">P197</a></td>
+<td>Docker-核心-网络</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=198">P198</a></td>
+<td>Docker-部署-服务端&amp;前端部署</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=199">P199</a></td>
+<td>Docker-部署-DockerCompose</td>
+<td>部署时精看</td>
+<td>S5 真实部署验证</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1yGydYEE3H/?p=200">P200</a></td>
+<td>Web开发-完结</td>
+<td>看总结</td>
+<td>无需等待本集起投</td>
+</tr>
+</tbody>
+</table></div></article>
+<footer class="footer">学序项目文档 · 由 tools/build_docs.py 生成 · 文档中的目标和示例不代表功能已经验收。</footer></main></div><script>
+(() => {
+  const docs = [...document.querySelectorAll('.document')];
+  const titles = {"guide": "阅读导航", "startup": "启动运行", "intro": "项目介绍", "requirements": "需求文档", "api": "接口文档", "database": "数据库说明", "verification": "验收记录", "demo": "演示数据", "plan": "学习规划"};
+  const downloads = {"guide": "README.md", "startup": "../README.md", "intro": "项目介绍.md", "requirements": "需求文档.md", "api": "接口文档.md", "database": "../sql/README.md", "verification": "验收记录.md", "demo": "演示数据.md", "plan": "学习规划.md"};
+  const defaultDoc = "guide";
+  const toc = document.getElementById('toc');
+  const sidebar = document.getElementById('sidebar');
+  const search = document.getElementById('search');
+  const results = document.getElementById('search-results');
+  let current = defaultDoc;
+  const headings = docs.flatMap(article => [...article.querySelectorAll('h2,h3,h4')].map(heading => {
+    let text = heading.textContent;
+    for (let next = heading.nextElementSibling; next && !/^H[1-4]$/.test(next.tagName); next = next.nextElementSibling) text += ' ' + next.textContent;
+    return {doc:article.dataset.doc, id:heading.id, title:heading.textContent, text:text.toLocaleLowerCase()};
+  }));
+  function route() {
+    let raw;
+    try { raw = decodeURIComponent(location.hash.slice(1)); } catch { raw = ''; }
+    let [key, ...parts] = raw.split(':');
+    let id = parts.join(':');
+    if (!Object.prototype.hasOwnProperty.call(titles, key)) {
+      const legacy = raw && docs.find(doc => [...doc.querySelectorAll('[id]')].some(node => node.id === raw));
+      key = legacy ? legacy.dataset.doc : defaultDoc;
+      id = legacy ? raw : '';
+    }
+    current = key;
+    docs.forEach(doc => { doc.hidden = doc.dataset.doc !== key; });
+    document.querySelectorAll('.tabs a').forEach(a => { if (a.dataset.tab === key) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+    document.getElementById('doc-name').textContent = titles[key];
+    document.getElementById('download').href = downloads[key];
+    document.getElementById('download').download = downloads[key].split('/').pop();
+    document.title = '学序 · ' + titles[key] + ' | 项目文档';
+    toc.replaceChildren();
+    headings.filter(h => h.doc === key && !document.getElementById(h.id).matches('h4')).forEach(h => {
+      const a = document.createElement('a'); a.href = '#' + key + ':' + h.id; a.textContent = h.title;
+      if (document.getElementById(h.id).matches('h3')) a.className = 'depth3'; toc.appendChild(a);
+    });
+    sidebar.classList.remove('open'); document.getElementById('menu').setAttribute('aria-expanded','false');
+    requestAnimationFrame(() => {
+      const target = id && document.getElementById(id);
+      if (target) target.scrollIntoView({block:'start'}); else window.scrollTo(0,0);
+    });
+  }
+  window.addEventListener('hashchange', route);
+  document.getElementById('menu').addEventListener('click', () => {
+    const open = sidebar.classList.toggle('open'); document.getElementById('menu').setAttribute('aria-expanded',String(open));
+  });
+  document.getElementById('print').addEventListener('click', () => window.print());
+  document.querySelectorAll('pre').forEach(pre => {
+    const button = document.createElement('button'); button.className = 'copy'; button.type = 'button'; button.textContent = '复制';
+    button.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(pre.querySelector('code').textContent); button.textContent = '已复制'; }
+      catch { button.textContent = '请选择文本复制'; }
+      setTimeout(() => button.textContent = '复制',1800);
+    }); pre.appendChild(button);
+  });
+  search.addEventListener('input', () => {
+    const query = search.value.trim().toLocaleLowerCase(); results.replaceChildren();
+    if (!query) { results.hidden = true; return; }
+    const found = headings.filter(h => h.title.toLocaleLowerCase().includes(query) || h.text.includes(query));
+    results.hidden = false;
+    const title = document.createElement('h3'); title.textContent = `找到 ${found.length} 个相关章节（显示前 30 项）`; results.appendChild(title);
+    found.slice(0,30).forEach(h => {
+      const a = document.createElement('a'); a.className = 'result'; a.href = '#' + h.doc + ':' + h.id;
+      a.textContent = h.title; const small = document.createElement('small'); small.textContent = titles[h.doc]; a.appendChild(small);
+      a.addEventListener('click', () => { results.hidden = true; search.value = ''; }); results.appendChild(a);
+    });
+  });
+  document.addEventListener('keydown', event => {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); if (innerWidth<=720) sidebar.classList.add('open'); search.focus(); }
+    if (event.key === 'Escape') { results.hidden = true; search.value = ''; sidebar.classList.remove('open'); }
+  });
+  route();
+})();
+</script></body></html>

@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-31",
+  "source": "local re-run before publication",
+  "backend_tests": {
+    "tests": 22,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontend_tests": {
+    "tests": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "backend_package": "passed",
+  "frontend_typecheck_and_build": "passed",
+  "business_tables": 11,
+  "roles": 3,
+  "historical_http_acceptance": {
+    "date": "2026-10-23",
+    "groups": 13,
+    "rerun_for_this_release": false
+  },
+  "capacity_load_test_executed": false
+}

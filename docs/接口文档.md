@@ -1,0 +1,216 @@
+# 学序 EduFlow · V2 接口文档
+
+版本：2.0.0 · 更新：2026-10-23。适用于当前 V2 前端与 Java 后端。旧 V1 文档已于 2026-10-24 精简移除，当前接口以本文为准。
+
+相关文档：[需求与验收](需求文档.md) · [项目介绍](项目介绍.md) · [学习规划](学习规划.md)。
+
+## 1. 调用约定
+
+开发浏览器地址 127.0.0.1:5173，通过 `/api` 代理；后端默认 127.0.0.1:8081，路径不带 /api。生产 Nginx 或本地静态产物服务器同样提供 /api。以 `GET /students` 表示后端路径。
+
+除 POST /auth/login 和 GET /health，所有接口需要 `Authorization: Bearer <token>`。JSON 写请求使用 application/json。ID 为字符串，新增时服务端生成 UUID，兼容旧学生 ID；日期 YYYY-MM-DD；时间为学校本地日期时间，不宣称带 UTC 偏移。
+
+所有业务返回 JSON，包含 code、msg、data；成功 code=1，失败 code=0；不返回空 204。
+
+```json
+{"code":1,"msg":"success","data":{"items":[],"total":0,"page":1,"pageSize":10}}
+```
+
+```json
+{"code":0,"msg":"数据已被修改，请重新加载后再提交","data":null}
+```
+
+| HTTP | 含义 |
+| --- | --- |
+| 200 | 成功，包括创建、更新、删除 |
+| 400 | 参数、字段、名单或业务规则不合法 |
+| 401 | 未登录、签名/时间/账户状态无效或已撤销 |
+| 403 | 角色或课程范围越权 |
+| 404 | 目标不存在 |
+| 405 / 415 | 方法不支持 / 请求媒体类型不支持 |
+| 409 | 唯一键、陈旧版本或并发事务冲突；整批不会部分成功 |
+| 413 | HTTP 请求体超过 16 MiB；CSV 文本另外限制 2 MiB |
+| 429 | 同来源 IP 一分钟超过 20 次登录尝试 |
+| 500 | 服务内部失败；不向客户端泄露数据库、密钥或堆栈 |
+
+## 2. 认证与账户
+
+<a id="auth-design"></a>
+
+| 方法 / 路径 | 输入 / 输出 | 权限 |
+| --- | --- | --- |
+| GET /health | data={status:"UP",version:"2.0.0"}，应用存活探针，不保证数据库当时可写 | 公开 |
+| POST /auth/login | {username,password} → {token,expiresIn:1800,user} | 公开 |
+| GET /auth/me | {id,username,displayName,role,studentId} | 已登录 |
+| POST /auth/logout | 无 body；增加 token_version，使此账户所有旧登录失效 | 已登录 |
+| PUT /auth/password | {oldPassword,password}；12–72 UTF-8 字节，成功后旧登录失效 | 已登录 |
+| GET /users | 账户数组：id,username,displayName,role,enabled,studentId,version；不含密码哈希 | ADMIN |
+| POST /users | {username,password,displayName,role,studentId?} → 安全账户资料 | ADMIN |
+| PUT /users/{id} | {displayName,enabled:0或1,version}；不能禁用自己或重新启用已删除学生档案的账户 | ADMIN |
+| GET /users/{id}/courses | [{courseId}] | ADMIN |
+| PUT /users/{id}/courses/{courseId} | 无 body，授予教师课程权限，重复授予可安全重试 | ADMIN |
+| DELETE /users/{id}/courses/{courseId} | 无 body，撤销教师课程权限 | ADMIN |
+
+username 为 4–50 位字母数字 . _ -；displayName 1–50 字。role 为 ADMIN/TEACHER/STUDENT；学生账户必须绑定已存在学生，一个学生只能绑定一个账户；教师授权接口仅接受 TEACHER 账户。role/studentId 开通后不可通过账户修改接口更改。
+
+首次启动空账户库设置环境变量 ADMIN_PASSWORD 和 JWT_SECRET，创建 username=admin。已有 admin 时修改此环境变量不会重置数据库密码；改密使用已登录接口。
+
+## 3. 学生档案
+
+<a id="students-list"></a>
+<a id="students-detail"></a>
+<a id="students-create"></a>
+<a id="students-update"></a>
+<a id="students-delete"></a>
+<a id="students-single-delete"></a>
+<a id="students-batch-delete"></a>
+<a id="students-import"></a>
+
+| 方法 / 路径 | 输入 | data |
+| --- | --- | --- |
+| GET /students | search?,className?,status?,page=1,pageSize=10 | {items:Student[],total,page,pageSize} |
+| GET /students/{id} | 路径 ID | Student |
+| POST /students | StudentInput | 创建后的 Student，version=0 |
+| PUT /students/{id} | StudentInput + version | 更新后的 Student，version 加一 |
+| DELETE /students/{id} | 无 body | null，关联清理与批量删除相同 |
+| POST /students/batch-delete | {ids:string[]}，1–500 个不同 ID | null |
+| POST /students/import | {csv:string} | {imported:number} |
+
+Student 为 id,studentNo,name,gender,className,major,phone,email,status,enrollmentDate,version。StudentInput 不需要 id/major，后端忽略其对主键/专业的覆盖。查询仅 ADMIN 和 TEACHER；教师只读授权课程的学生，phone/email 返回空字符串。写接口仅 ADMIN。
+
+```json
+{"studentNo":"S20260001","name":"示例学生","gender":"未说明","className":"计算机 2601","phone":"","email":"","status":"在读","enrollmentDate":"2026-09-01"}
+```
+
+更新增加版本：
+
+```json
+{"studentNo":"S20260001","name":"示例学生","gender":"未说明","className":"计算机 2601","phone":"13800000000","email":"","status":"在读","enrollmentDate":"2026-09-01","version":0}
+```
+
+字段规则、CSV 表头与删除策略见[需求文档](需求文档.md)。没有“创建学生即选所有课程”的 V1 行为。学号唯一键冲突为 409；CSV 校验发现重复通常为 400 并定位记录号，数据库最终唯一键冲突为 409。
+
+## 4. 班级
+
+| 方法 / 路径 | 输入 | data / 规则 |
+| --- | --- | --- |
+| GET /classes | 无 | ClassRoom[]；教师只见授权课程学生涉及的班级与范围内人数 |
+| POST /classes | {name,major} | 新建班级，version=0 |
+| PUT /classes/{id} | {name,major,version} | 新班级资料；同步学生名称/专业，学生版本同时递增 |
+| DELETE /classes/{id}?version=0 | 查询版本 | null；存在学生时 400 |
+
+GET 允许 ADMIN/TEACHER；写操作仅 ADMIN。列表 ClassRoom={id,name,major,version,studentCount}。单条创建/更新不返回 studentCount；前端保存后重新加载列表。
+
+## 5. 课程
+
+<a id="courses-list"></a>
+<a id="courses-create"></a>
+<a id="courses-update"></a>
+
+| 方法 / 路径 | 输入 | data / 权限 |
+| --- | --- | --- |
+| GET /courses | 无 | Course[]；管理员全部，教师授权范围，学生选课目录 |
+| POST /courses | CourseInput | 新建 Course；ADMIN |
+| PUT /courses/{id} | CourseInput + version | 更新 Course；ADMIN |
+| DELETE /courses/{id}?version=0 | 查询版本 | null；ADMIN，存在选课/历史时拒绝 |
+
+Course={id,code,name,description,teacher,category,credits,hours,enrolled,capacity,room,weekday,time,color,version}；查询还可能含起止时间和系统时间字段，客户端只依赖上述字段。enrolled 动态统计，客户端不可设置。
+
+```json
+{"code":"JAVA101","name":"Java 程序设计","description":"面向对象与 Web 基础","teacher":"示例教师","category":"专业必修","credits":3,"hours":48,"capacity":50,"room":"教学楼 201","weekday":1,"time":"09:00–10:30","color":"orange"}
+```
+
+课程初始化一项“课程考核”考试，不自动为任何学生选课。教师显示名称与账户授权相互独立。
+
+## 6. 选课
+
+| 方法 / 路径 | 输入 | data / 权限 |
+| --- | --- | --- |
+| GET /courses/{id}/students | 无 | 已选学生必要字段数组，不含电话邮箱；ADMIN 或授权 TEACHER |
+| POST /courses/{id}/enrollments | {studentIds:string[]} | null；ADMIN 批量，STUDENT 只可含本人一个 ID |
+| DELETE /courses/{id}/enrollments/{studentId} | 无 body | null；ADMIN 或本人学生；有成绩/考勤时 400 |
+
+列表按学号排序。1–500 个不同在读学生，服务端锁定课程后检查容量；任一无效目标或容量不足整批失败。选课同时建立该课程每项考试的空白成绩。
+
+## 7. 考试
+
+| 方法 / 路径 | 输入 | data |
+| --- | --- | --- |
+| GET /courses/{id}/exams | 无 | Exam[]，按日期及 ID 排序 |
+| POST /courses/{id}/exams | {name,examDate,weight} | 新建 Exam；为已选学生初始化成绩 |
+| PUT /courses/{id}/exams/{examId} | {name,examDate,weight,version} | 更新 Exam |
+| DELETE /courses/{id}/exams/{examId}?version=0 | 查询版本 | null；已录入成绩不能删除 |
+
+Exam={id,courseId,name,examDate,weight,version}。全部需要 ADMIN 或该课程教师权限。weight 为 0.01–100 相对权重，最多两位小数；同课程名称唯一；考试满分统一为 100。
+
+## 8. 成绩
+
+<a id="grades-list"></a>
+<a id="grades-save"></a>
+
+GET /grades?courseId=...&examId=...。examId 可省略，选择该课程按日期和 ID 排序的第一项考试；无考试时 400，页面可通过考试管理补建。返回：
+
+```json
+{"code":1,"msg":"success","data":{"examId":"exam-id","exams":[],"students":[],"grades":[]}}
+```
+
+实际 exams 为当前课程全部考试；students 为已选学生必要资料；grades 元素为 {id,courseId,examId,studentId,score,version}，score=null 时明确返回 null，不省略字段。
+
+PUT /grades/batch：
+
+```json
+{"courseId":"course-id","examId":"exam-id","scores":[{"studentId":"student-id","score":0,"version":0},{"studentId":"another-student-id","score":null,"version":0}]}
+```
+
+成功返回最新 GradeSheet，形状同 GET。score 不能缺失；score 为 null 或 0–100 且最多两位小数；scores 包含 1–10000 个不同选课学生。每个修改项提交读取时的 version；任意一项陈旧返回 409，前面已执行的更新也全部回滚。调用后重新加载后再继续编辑，不能自动覆盖冲突。
+
+全部需要 ADMIN 或课程教师。导出由前端从已授权查询结果生成，不额外开放后端文件下载接口。
+
+## 9. 考勤
+
+<a id="attendance-list"></a>
+<a id="attendance-save"></a>
+
+GET /attendance?courseId=...&date=YYYY-MM-DD，返回：
+
+```json
+{"code":1,"msg":"success","data":{"courseId":"course-id","date":"2026-10-23","savedAt":null,"version":-1,"students":[],"records":[]}}
+```
+
+首次虚拟名单为在读选课学生，默认 present，不落库。保存后的 savedAt 为学校本地日期时间字符串，version≥0，历史名单从明细恢复。
+
+PUT /attendance/batch：
+
+```json
+{"courseId":"course-id","date":"2026-10-23","version":-1,"records":[{"studentId":"student-id","status":"present"},{"studentId":"another-student-id","status":"leave"}]}
+```
+
+提交完整名单而非筛选结果；空班允许 records=[]。状态仅 present/late/absent/leave；首次保存 version=-1，之后带最新版本。名单不全/重复/过期均拒绝；成功返回最新点名表。首次保存并发仅一方成功，另一方 409。全部需要 ADMIN 或课程教师。
+
+## 10. 工作台、报表和审计
+
+<a id="dashboard-overview"></a>
+
+| 方法 / 路径 | 输入 | data / 权限 |
+| --- | --- | --- |
+| GET /dashboard/overview | 无 | Overview；ADMIN 或 TEACHER，按权限范围 |
+| GET /reports | courseId?,className?,from?,to? | Report[]；管理员全部，教师授权范围，学生本人 |
+| GET /audit | search?,page=1,pageSize=20 | {items,total,page,pageSize}；ADMIN |
+| GET /portal | 无 | Portal；仅绑定有效学生档案的 STUDENT |
+
+Overview 字段：studentCount、activeCount、courseCount、averageScore、attendanceRate、attendanceRecorded、gradeRecorded、recentStudents、classes[{name,count}]、trend[{month,current}]。averageScore 是学生课程加权均分的均值；没有成绩/考勤数值兼容返回 0，同时用 gradeRecorded/attendanceRecorded 区分无数据；页面显示“—”。教师 trend=[]，不泄露全校建档数据。
+
+Report 字段：id（学生 ID）、studentNo、name、className、courseId、courseName、recorded（非 null 成绩数）、expected（区间内考试数）、averageScore（加权均分，可 null）、attendanceTotal、attendancePresent、attendanceRate（可 null）。from/to 分别约束考试日期和点名日期，含边界；不填为 1000-01-01 至 9999-12-31。结束早于开始返回 400。多次考试权重和考勤分母见需求文档。
+
+Audit 元素：id、operatorId、operator（显示名称可空）、action、targetType、targetId、beforeData、afterData、result、message、createTime。beforeData/afterData 是 JSON 摘要文本；不提供密码、JWT 或完整学生请求。search 模糊匹配动作如 PUT_GRADES；pageSize 1–200。
+
+Portal={student,courses,enrolledIds,grades,attendance}。courses 为目录，enrolledIds 为本人课程 ID；grades 仅本人，额外含 examName、examDate、weight、courseName；attendance 仅本人，含 courseId、courseName、date、status。不接受 studentId 查询参数扩大访问范围。
+
+## 11. V1 客户端迁移注意
+
+1. 请求增加 Bearer JWT；401 清理登录，403 显示权限错误。
+2. 更新资料、成绩及点名提交 version；点名首次为 -1。
+3. 班级来自 /classes；不再固定枚举。新增学生不自动选课。
+4. 成绩增加 examId；同课程学生允许存在多次考试，唯一键改为 exam_id+student_id。
+5. Grades/Attendance 先加载真实课程，不能请求演示 ID c1。
+6. 当前正式入口为 src/v2；旧 App/pages/lib/api/seed 保留作学习对照，未被 main.tsx 使用，不是 V2 运行链路。

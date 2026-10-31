@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: xuexu-backend
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL:jdbc:mysql://localhost:3306/xuexu?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD}
+    hikari:
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0
+
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  port: ${PORT:8081}
+  tomcat:
+    max-http-form-post-size: 16MB
+
+app:
+  jwt-secret: ${JWT_SECRET}
+  bootstrap-password: ${ADMIN_PASSWORD:}
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true

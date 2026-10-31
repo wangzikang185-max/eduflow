@@ -1,0 +1,35 @@
+services:
+  mysql:
+    image: mysql:8.0.34
+    environment:
+      MYSQL_DATABASE: xuexu
+      MYSQL_USER: xuexu
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in .env}
+    volumes: [mysql-data:/var/lib/mysql]
+    healthcheck:
+      test: [CMD-SHELL, 'MYSQL_PWD=$$MYSQL_PASSWORD mysql -h 127.0.0.1 -u xuexu -e "SELECT 1" xuexu']
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  backend:
+    build: ./backend
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/xuexu?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      DB_USERNAME: xuexu
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+      SERVER_ADDRESS: 0.0.0.0
+      PORT: 8081
+      LOG_DIR: /app/logs
+    depends_on:
+      mysql: {condition: service_healthy}
+    volumes: [app-logs:/app/logs]
+  frontend:
+    build: ./frontend
+    ports: ['127.0.0.1:5180:80']
+    depends_on: [backend]
+volumes:
+  mysql-data:
+  app-logs:
