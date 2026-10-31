@@ -15,7 +15,7 @@
 <header class="top"><div class="top-inner"><span class="mark">序</span><span class="brand">学序 EduFlow</span><span class="sub">PROJECT DOCUMENTATION</span>
 <div class="top-actions"><a id="download" href="README.md" download>下载 Markdown</a><button id="print" type="button">打印 / 保存 PDF</button><button id="menu" class="menu" aria-controls="sidebar" aria-expanded="false" type="button">目录</button></div></div>
 <nav class="tabs" aria-label="文档类型" style="overflow-x:auto;white-space:nowrap"><a href="#guide" data-tab="guide">阅读导航</a><a href="#startup" data-tab="startup">启动运行</a><a href="#intro" data-tab="intro">项目介绍</a><a href="#requirements" data-tab="requirements">需求文档</a><a href="#api" data-tab="api">接口文档</a><a href="#database" data-tab="database">数据库说明</a><a href="#verification" data-tab="verification">验收记录</a><a href="#demo" data-tab="demo">演示数据</a><a href="#plan" data-tab="plan">学习规划</a></nav></header>
-<div class="layout"><aside class="sidebar" id="sidebar"><p class="side-label">SEARCH &amp; CONTENTS</p><label for="search" class="side-label">搜索全部文档</label><input class="search" id="search" type="search" placeholder="搜索需求、接口或集数…" autocomplete="off"><p class="search-note">Ctrl / Cmd + K · 输入关键词搜索章节</p><section id="search-results" class="search-results" aria-live="polite" hidden></section><nav id="toc" class="toc" aria-label="当前文档目录"></nav><p class="source-note">基线：2026-10-23<br>以 Markdown 为维护源<br>生成版本：39001235a941</p></aside>
+<div class="layout"><aside class="sidebar" id="sidebar"><p class="side-label">SEARCH &amp; CONTENTS</p><label for="search" class="side-label">搜索全部文档</label><input class="search" id="search" type="search" placeholder="搜索需求、接口或集数…" autocomplete="off"><p class="search-note">Ctrl / Cmd + K · 输入关键词搜索章节</p><section id="search-results" class="search-results" aria-live="polite" hidden></section><nav id="toc" class="toc" aria-label="当前文档目录"></nav><p class="source-note">基线：2026-10-23<br>以 Markdown 为维护源<br>生成版本：a64b7eb9a399</p></aside>
 <main class="content"><section class="hero"><div class="eyebrow">LEARN · BUILD · VERIFY</div><h2 id="doc-name">阅读导航</h2><p>从这里阅读说明、规范启动、核对数据并逐项验收，无需在项目目录中来回寻找。</p><div class="pill-row"><span class="pill">启动与验收</span><span class="pill">管理员 / 教师 / 学生</span><span class="pill">数据库与验证附件</span><span class="pill">P84–200 学习索引</span></div></section>
 <article class="document" id="document-guide" data-doc="guide"><h1 id="guide-项目文档阅读导航">项目文档阅读导航</h1>
 <p>先阅读<a href="#intro">项目介绍</a>，再按需要查看<a href="#startup">启动说明</a>、<a href="#requirements">需求文档</a>、<a href="#api">接口文档</a>、<a href="#database">数据库说明</a>、<a href="#verification">验证记录</a>、<a href="#demo">演示数据</a>及<a href="#plan">学习规划</a>。</p>
@@ -51,7 +51,7 @@ pnpm --dir frontend dev
 <p>已有数据升级前先备份；Flyway 会从旧学生表 baseline 后执行迁移。MySQL DDL 不保证整段事务回滚。</p>
 <h2 id="startup-测试与证据">测试与证据</h2>
 <p>2026-10-31 本地重新执行：<strong>22 项后端测试、10 项前端领域测试全部通过，JAR 打包及 TypeScript/Vite 构建成功</strong>。</p>
-<p>另保留 2026-10-23 的 <strong>13 组真实 HTTP/MySQL 验收</strong>原始报告，覆盖教师课程越权、学生仅本人、批量回滚、最后名额竞争、版本冲突及令牌撤销。本次发布没有把历史报告改成新日期，也没有进行 100 并发容量压测。</p>
+<p>2026-10-31 进一步在 GitHub Actions 的独立 MySQL 8.0.34 环境完成 <strong>13 组真实 HTTP/MySQL 验收</strong>，覆盖教师课程越权、学生仅本人、批量回滚、最后名额竞争、版本冲突及令牌撤销。<a href="https://github.com/wangzikang185-max/eduflow/actions/runs/41184645714">云端运行记录</a> · <a href="verification/cloud-http-acceptance-20261031.json">原始验收报告</a>。2026-10-23 历史报告另行保留；未进行 100 并发容量压测。</p>
 <pre><code class="language-sh">mvn -B -ntp -f backend/pom.xml package
 pnpm --dir frontend test
 pnpm --dir frontend build
@@ -1194,8 +1194,11 @@ WHERE s.id IS NULL OR a.id IS NULL;
 <article class="document" id="document-verification" data-doc="verification" hidden><h1 id="verification-验证记录">验证记录</h1>
 <h2 id="verification-2026年10月31日发布前重新检查">2026年10月31日发布前重新检查</h2>
 <p>Windows / JDK 21：后端 Maven package 成功，22 项 JUnit/MockMvc 等测试，0 失败、0 错误、0 跳过；前端 10 项领域测试通过；TypeScript/Vite production build 成功。详见<a href="verification/release-checks-20261031.json">机器可读记录</a>。这些测试不等于全系统覆盖率。</p>
+<h2 id="verification-2026年10月31日云端真实-http-与-mysql-验收">2026年10月31日云端真实 HTTP 与 MySQL 验收</h2>
+<p><a href="https://github.com/wangzikang185-max/eduflow/actions/runs/41184645714">GitHub Actions</a> 全流程通过：前端测试及构建、后端22项测试及打包、独立 MySQL 8.0.34 的13组真实业务检查。<a href="verification/cloud-http-acceptance-20261031.json">下载本轮原始报告</a>。</p>
+<p>首次云端运行在超大请求的 urllib 上传阶段出现 BrokenPipeError；服务端提前拒绝上传时客户端未能读取响应。现将这一检查改为声明超限 Content-Length 并在上传前明确读取及断言 HTTP 413，不再将断连当成通过。其余验收场景保留，修正后13组全部通过。</p>
 <h2 id="verification-历史真实-http-与-mysql-验收">历史真实 HTTP 与 MySQL 验收</h2>
-<p>2026-10-23 在隔离 MySQL 8.0.34 完成 13 组检查，保留<a href="verification/http-acceptance.json">原始 JSON</a>及原日期。本次发布未重跑该集成验收，未进行 100 并发压测。历史检查内容：</p>
+<p>2026-10-23 在隔离 MySQL 8.0.34 完成 13 组检查，保留<a href="verification/http-acceptance.json">原始 JSON</a>及原日期。本轮重新执行结果见上一节，未进行 100 并发压测。历史检查内容：</p>
 <ol>
 <li>JWT authentication, malformed token and bad password rejected</li>
 <li>Student validation, case-insensitive uniqueness and MySQL pagination</li>

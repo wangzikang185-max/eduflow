@@ -21,5 +21,12 @@
     "groups": 13,
     "rerun_for_this_release": false
   },
-  "capacity_load_test_executed": false
+  "capacity_load_test_executed": false,
+  "cloud_ci": {
+    "date": "2026-10-31",
+    "url": "https://github.com/wangzikang185-max/eduflow/actions/runs/41184645714",
+    "conclusion": "success",
+    "http_acceptance_groups": 13,
+    "mysql": "8.0.34"
+  }
 }

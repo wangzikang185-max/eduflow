@@ -4,9 +4,15 @@
 
 Windows / JDK 21：后端 Maven package 成功，22 项 JUnit/MockMvc 等测试，0 失败、0 错误、0 跳过；前端 10 项领域测试通过；TypeScript/Vite production build 成功。详见[机器可读记录](verification/release-checks-20261031.json)。这些测试不等于全系统覆盖率。
 
+## 2026年10月31日云端真实 HTTP 与 MySQL 验收
+
+[GitHub Actions](https://github.com/wangzikang185-max/eduflow/actions/runs/41184645714) 全流程通过：前端测试及构建、后端22项测试及打包、独立 MySQL 8.0.34 的13组真实业务检查。[下载本轮原始报告](verification/cloud-http-acceptance-20261031.json)。
+
+首次云端运行在超大请求的 urllib 上传阶段出现 BrokenPipeError；服务端提前拒绝上传时客户端未能读取响应。现将这一检查改为声明超限 Content-Length 并在上传前明确读取及断言 HTTP 413，不再将断连当成通过。其余验收场景保留，修正后13组全部通过。
+
 ## 历史真实 HTTP 与 MySQL 验收
 
-2026-10-23 在隔离 MySQL 8.0.34 完成 13 组检查，保留[原始 JSON](verification/http-acceptance.json)及原日期。本次发布未重跑该集成验收，未进行 100 并发压测。历史检查内容：
+2026-10-23 在隔离 MySQL 8.0.34 完成 13 组检查，保留[原始 JSON](verification/http-acceptance.json)及原日期。本轮重新执行结果见上一节，未进行 100 并发压测。历史检查内容：
 
 1. JWT authentication, malformed token and bad password rejected
 2. Student validation, case-insensitive uniqueness and MySQL pagination
