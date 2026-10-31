@@ -47,7 +47,7 @@ pnpm --dir frontend dev
 
 2026-10-31 本地重新执行：**22 项后端测试、10 项前端领域测试全部通过，JAR 打包及 TypeScript/Vite 构建成功**。
 
-2026-10-31 进一步在 GitHub Actions 的独立 MySQL 8.0.34 环境完成 **13 组真实 HTTP/MySQL 验收**，覆盖教师课程越权、学生仅本人、批量回滚、最后名额竞争、版本冲突及令牌撤销。[云端运行记录](https://github.com/wangzikang185-max/eduflow/actions/runs/41184645714) · [原始验收报告](docs/verification/cloud-http-acceptance-20261031.json)。2026-10-23 历史报告另行保留；未进行 100 并发容量压测。
+2026-10-31 进一步在 GitHub Actions 的独立 MySQL 8.0.34 环境完成 **13 组真实 HTTP/MySQL 验收**，覆盖教师课程越权、学生仅本人、批量回滚、最后名额竞争、版本冲突及令牌撤销。[云端运行记录](https://github.com/wangzikang185-max/eduflow/actions/runs/41184645714) · [原始验收报告](docs/verification/cloud-http-acceptance-20261031.json)。2026-10-23 历史报告另行保留。另补做本机100请求争30名额（3轮）、20轮同版本竞争、10轮批量回滚及500行CSV整批校验，[方法及原始记录](docs/验收记录.md)。这些实验核对一致性，未宣称生产容量或吞吐上限。
 
 ```sh
 mvn -B -ntp -f backend/pom.xml package
