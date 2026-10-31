@@ -1,53 +1,46 @@
 # 学序 EduFlow
 
-面向管理员、教师和学生的教务管理系统。以学生 CRUD 学习原型为起点，借助 AI 辅助开发和调试，扩展为包含身份权限、选课、考试、成绩、考勤、报表及操作审计的个人项目。
+学序是一个面向管理员、教师和学生的教务管理 Web 应用。后端提供身份认证、数据范围控制、学生与课程管理、选课、考试、成绩、考勤、报表和操作审计；前端通过 HTTP API 读写 MySQL 数据。开发过程使用了 AI 辅助，功能与边界以源码和可复现测试为准。
 
-**Java 21 · Spring Boot 4.0.8 · Spring Security · MyBatis · MySQL 8 · Flyway · React 19 · TypeScript**
+**技术栈：** Java 21 · Spring Boot 4.0.8 · Spring Security · MyBatis · MySQL 8 · Flyway · React 19 · TypeScript · Vite
 
-[项目介绍](docs/项目介绍.md) · [需求文档](docs/需求文档.md) · [接口文档](docs/接口文档.md) · [验证记录](docs/验收记录.md)
+## 功能概览
 
-## 功能与实现
+| 模块 | 实现内容 |
+| --- | --- |
+| 身份与权限 | 管理员、教师、学生三种角色；JWT 登录、改密与令牌撤销；教师按课程授权，学生仅能查看本人数据。 |
+| 学生与班级 | 档案增删改查、SQL 条件分页、CSV 批量导入与导出、班级维护。 |
+| 课程与选课 | 课程管理、批量选课、学生自助选退课；课程行锁控制容量。 |
+| 考试与考勤 | 多次考试、成绩录入及版本冲突检查、按日点名和历史回显。 |
+| 报表与审计 | 授权范围内的工作台与学业报表；写操作的结果及版本摘要审计。 |
 
-- 3 类角色：管理员维护业务与授权；教师只操作获授权课程；学生仅访问本人学业信息。
-- 11 张业务表：班级、学生、课程、独立选课、多次考试、成绩、点名、账户与审计。
-- JWT + BCrypt + token_version：登录、改密、禁用和退出后的令牌撤销。
-- 选课通过课程行锁及 READ COMMITTED 控制名额；成绩和点名以版本条件更新检测冲突。
-- CSV 导入和批量保存通过 Service 事务保持全成全败；学生目录使用 SQL 条件分页。
-- Flyway V1/V2 管理数据库结构；前后端分离，同源代理联调。
+[架构与扩展指南](docs/项目介绍.md) · [需求与业务规则](docs/需求文档.md) · [API 契约](docs/接口文档.md) · [验证方法与结果](docs/验收记录.md) · [演示数据](docs/演示数据.md)
 
 ## 本地运行
 
-准备 JDK 21、Maven 3.9、Node 22.6+、pnpm 10.11.0，以及 MySQL 8.0.16+（已验证版本 8.0.34）。
+需要 JDK 21、Maven 3.9、Node.js 22.6+、pnpm 10.11.0 和 MySQL 8.0.16+。先安装前端依赖并创建空库：
 
 ```sh
-git clone https://github.com/wangzikang185-max/eduflow.git
-cd eduflow
 corepack enable
 pnpm --dir frontend install --frozen-lockfile
 ```
-
-创建空库（无需手动运行迁移 SQL）：
 
 ```sql
 CREATE DATABASE xuexu CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 ```
 
-Windows 下运行 `start.cmd`，首次会生成并提示 `runtime/local.env` 后退出。填写 DB_URL、DB_USERNAME、DB_PASSWORD，保留随机生成的 JWT_SECRET 和 ADMIN_PASSWORD，然后再次运行 `start.cmd`。默认入口 http://127.0.0.1:5173/，管理员用户名为 `admin`，密码取自本机配置。项目不包含真实用户数据、数据库备份或共享默认管理员密码。
+**Windows：** 运行 `start.cmd`。首次运行会生成 `runtime/local.env` 并退出；填写数据库连接和密码，保留脚本生成的随机 `JWT_SECRET`、`ADMIN_PASSWORD`，再次运行。启动完成后打开 [http://127.0.0.1:5173/](http://127.0.0.1:5173/)，管理员用户名为 `admin`，密码见本机配置。
 
-Linux/macOS 可以按 `.env.example` 设置环境变量，再在两个终端分别执行：
+**Linux/macOS：** 参照 [.env.example](.env.example) 设置环境变量，在两个终端分别运行：
 
 ```sh
 mvn -B -ntp -f backend/pom.xml spring-boot:run
 pnpm --dir frontend dev
 ```
 
-已有数据升级前先备份；Flyway 会从旧学生表 baseline 后执行迁移。MySQL DDL 不保证整段事务回滚。
+首次启动由 Flyway 执行 `V1`、`V2` 迁移。已有数据库升级前请先备份；不要修改已执行的迁移文件。公开仓库不包含真实业务数据、数据库密码或通用管理员密码。需要虚构演示资料时，按[演示数据说明](docs/演示数据.md)在专用数据库运行种子脚本。
 
-## 测试与证据
-
-2026-10-31 本地重新执行：**22 项后端测试、10 项前端领域测试全部通过，JAR 打包及 TypeScript/Vite 构建成功**。
-
-2026-10-31 进一步在 GitHub Actions 的独立 MySQL 8.0.34 环境完成 **13 组真实 HTTP/MySQL 验收**，覆盖教师课程越权、学生仅本人、批量回滚、最后名额竞争、版本冲突及令牌撤销。[云端运行记录](https://github.com/wangzikang185-max/eduflow/actions/runs/41184645714) · [原始验收报告](docs/verification/cloud-http-acceptance-20261031.json)。2026-10-23 历史报告另行保留。另补做本机100请求争30名额（3轮）、20轮同版本竞争、10轮批量回滚及500行CSV整批校验，[方法及原始记录](docs/验收记录.md)。这些实验核对一致性，未宣称生产容量或吞吐上限。
+## 验证
 
 ```sh
 mvn -B -ntp -f backend/pom.xml package
@@ -55,16 +48,22 @@ pnpm --dir frontend test
 pnpm --dir frontend build
 ```
 
-真实业务验收使用独立空库和测试服务；设置 V2_TEST_PASSWORD、V2_TEST_JWT_SECRET 后运行：
+当前清理分支本机检查为 21 项后端测试、5 项前端 CSV 导出测试，以及前端类型检查和生产构建。此前的[GitHub Actions 运行记录](https://github.com/wangzikang185-max/eduflow/actions/runs/41184645714)在独立 MySQL 环境通过 13 组真实 HTTP 验收；当时的 22 项后端测试和 10 项前端测试含本次移除的旧代码检查。当前分支合并后的云端结果以[工作流](.github/workflows/verify.yml)为准。范围、原始结果和复现步骤见[验证记录](docs/验收记录.md)。
 
-```sh
-python tools/verify_v2.py --base http://127.0.0.1:8086
+## 代码结构
+
+```text
+backend/                 Spring Boot API、业务规则、权限、MyBatis、Flyway、测试
+frontend/src/v2/         正式 React 界面与 HTTP 客户端
+frontend/src/components/ 复用的界面组件
+frontend/src/lib/        复用的 CSV 导出工具
+docs/                    对外技术说明、API 契约与验证证据
+sql/                     只读数据库核对脚本；实际建表由 Flyway 管理
+tools/                   本地启动、预览、演示数据和集成验证脚本
 ```
 
-具体设置见[验证记录](docs/验收记录.md)。GitHub Actions 自动构建并执行独立 MySQL 验收，云端结果以仓库 Actions 为准。
+新增业务功能时，从 `docs/需求文档.md` 明确规则与角色范围，新增 Flyway 迁移（如需改表），再依次修改 Controller、Service、Mapper、`frontend/src/v2` 与测试。现有 V1/V2 迁移是历史链，不应重写。
 
-## 文档与演示数据
+## 当前边界
 
-`docs/index.html` 为离线文档中心，应用内 `/project-docs.html` 可阅读同一份文档。修改 Markdown 后运行 `python tools/build_docs.py`，再运行 `python tools/build_docs.py --check`（需要 Python-Markdown）。虚构演示数据可以用 `tools/seed_demo.py` 通过真实 API 创建，见[演示数据说明](docs/演示数据.md)。
-
-提供 Dockerfile 和 Compose，尚未在本机执行容器验证；无公网演示地址。课程内列表与报表主要面向小规模工作区，未宣称高吞吐或生产级部署。
+课程内名单与部分报表仍面向小规模工作区，未做大规模吞吐验证；容器配置已提供，但不把本地容器部署当作已验证结果。没有公网演示地址。

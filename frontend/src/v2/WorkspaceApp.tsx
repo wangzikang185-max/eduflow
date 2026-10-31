@@ -278,7 +278,7 @@ function Workspace() {
           ))}
         </nav>
         <div className="v2-sidebar-foot">
-          <a href="/project-docs.html" target="_blank" rel="noreferrer">
+          <a href="https://github.com/wangzikang185-max/eduflow#readme" target="_blank" rel="noreferrer">
             项目文档与接口说明 ↗
           </a>
           <span>学序教务管理系统 · 2.0</span>
@@ -478,7 +478,7 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
         <p className="v2-login-help">
           首次使用：由启动脚本初始化管理员，密码见本机 runtime/local.env。
           <br />
-          <a href="/project-docs.html" target="_blank" rel="noreferrer">
+          <a href="https://github.com/wangzikang185-max/eduflow#readme" target="_blank" rel="noreferrer">
             查看启动与项目说明 ↗
           </a>
         </p>
