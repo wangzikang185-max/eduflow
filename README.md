@@ -50,7 +50,7 @@ pnpm --dir frontend test
 pnpm --dir frontend build
 ```
 
-当前清理分支本机检查为 21 项后端测试、5 项前端 CSV 导出测试，以及前端类型检查和生产构建。此前的[GitHub Actions 运行记录](https://github.com/wangzikang185-max/eduflow/actions/runs/41184645714)在独立 MySQL 环境通过 13 组真实 HTTP 验收；当时的 22 项后端测试和 10 项前端测试含本次移除的旧代码检查。当前分支合并后的云端结果以[工作流](.github/workflows/verify.yml)为准。范围、原始结果和复现步骤见[验证记录](docs/验收记录.md)。
+2026-11-01 的[整理版 GitHub Actions](https://github.com/wangzikang185-max/eduflow/actions/runs/41271898104)通过 21 项后端测试、5 项前端 CSV 导出测试、TypeScript / Vite 生产构建，以及独立 MySQL 8.0.34 的 13 组真实 HTTP 业务验收。[原始验收 JSON](docs/verification/cloud-http-acceptance-20261101.json)与具体提交、历史结果及验证边界见[验证记录](docs/验收记录.md)。当前提交的运行结果以[工作流记录](https://github.com/wangzikang185-max/eduflow/actions)为准。
 
 ## 代码结构
 
