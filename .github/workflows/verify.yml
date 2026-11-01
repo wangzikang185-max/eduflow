@@ -2,7 +2,7 @@ name: Verify V2
 on: [push, pull_request]
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     services:
       mysql:
         image: mysql:8.0.34
@@ -10,10 +10,10 @@ jobs:
         ports: ['3306:3306']
         options: --health-cmd="mysqladmin ping -pacceptance-only" --health-interval=5s --health-timeout=5s --health-retries=30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with: {distribution: temurin, java-version: '21', cache: maven, cache-dependency-path: backend/pom.xml}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with: {node-version: '22'}
       - run: corepack enable
       - run: cd frontend && pnpm install --frozen-lockfile && pnpm test && pnpm build
@@ -26,8 +26,27 @@ jobs:
           export V2_TEST_PASSWORD=$ADMIN_PASSWORD
           export PORT=8086
           java -jar backend/target/xuexu-backend-2.0.0.jar > acceptance-server.log 2>&1 &
-          for n in $(seq 1 60); do curl -fsS http://127.0.0.1:8086/health && break || sleep 1; done
-          python tools/verify_v2.py
-      - uses: actions/upload-artifact@v4
+          ready=0
+          for n in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:8086/health >/dev/null 2>&1; then
+              ready=1
+              break
+            fi
+            sleep 1
+          done
+          if [ "$ready" -ne 1 ]; then
+            echo "Backend health check timed out"
+            tail -n 120 acceptance-server.log
+            exit 1
+          fi
+          if ! python tools/verify_v2.py; then
+            tail -n 120 acceptance-server.log
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v7
         if: always()
-        with: {name: acceptance-evidence, path: 'runtime/acceptance.json'}
+        with:
+          name: acceptance-evidence
+          path: |
+            runtime/acceptance.json
+            acceptance-server.log

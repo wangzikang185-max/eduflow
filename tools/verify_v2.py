@@ -237,6 +237,8 @@ try:
     report={'version':'2.0.0','passed':True,'timestamp':dt.datetime.now(dt.timezone.utc).isoformat(),'base':args.base,'database':'disposable MySQL 8.0.34','checks':checks,'count':len(checks)}
     target=Path(args.report);target.parent.mkdir(parents=True,exist_ok=True);target.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     print(f'ALL {len(checks)} acceptance groups passed. Report: {target}')
-except Exception:
+except Exception as error:
+    report={'version':'2.0.0','passed':False,'timestamp':dt.datetime.now(dt.timezone.utc).isoformat(),'base':args.base,'checks':checks,'count':len(checks),'error_type':type(error).__name__}
+    target=Path(args.report);target.parent.mkdir(parents=True,exist_ok=True);target.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     print(f'FAILED after {len(checks)} groups. Fixture prefix: {prefix}')
     raise
